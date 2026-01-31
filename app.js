@@ -298,6 +298,7 @@ function weightedPick(items, weights){
 }
 
 function generateStarterDeck(){
+  const suitName = activeSuit;
   const commonRanks = ["2","3","4","5","6"];
   const rareRanks = ["7","8","9","10"];
   const ultraRanks = ["J","Q","K","A"];
@@ -309,28 +310,29 @@ function generateStarterDeck(){
   for (let i = 0; i < 10; i += 1) {
     const rank = weightedPick(commonRanks, commonWeights);
     const council = councilPool[Math.floor(Math.random() * councilPool.length)];
-    addCardCopies(`${activeSuit}-${council}-${rank}`, 1);
+    addCardCopies(`${suitName}-${council}-${rank}`, 1);
   }
   for (let i = 0; i < 3; i += 1) {
     const rank = weightedPick(rareRanks, rareWeights);
     const council = councilPool[Math.floor(Math.random() * councilPool.length)];
-    addCardCopies(`${activeSuit}-${council}-${rank}`, 1);
+    addCardCopies(`${suitName}-${council}-${rank}`, 1);
   }
   for (let i = 0; i < 2; i += 1) {
     const rank = weightedPick(ultraRanks, ultraWeights);
     const council = councilPool[Math.floor(Math.random() * councilPool.length)];
-    addCardCopies(`${activeSuit}-${council}-${rank}`, 1);
+    addCardCopies(`${suitName}-${council}-${rank}`, 1);
   }
-  setStatus("Starter deck generated.");
+  setStatus(`${suitName} suit deck generated.`);
   renderAll();
 }
 
 function updateCollectionEmptyState(){
-  if (!collectionEmpty) return;
   const hasCards = getTotalCardsForSuit(activeSuit) > 0;
-  collectionEmpty.style.display = hasCards ? "none" : "block";
+  if (collectionEmpty) {
+    collectionEmpty.style.display = hasCards ? "none" : "block";
+  }
   const host = document.getElementById("wheelModuleHost");
-  if (host) host.style.display = hasCards ? "block" : "none";
+  if (host) host.style.display = "block";
 }
 
 function buyPack(size, cost){
@@ -361,8 +363,8 @@ function setActiveSuit(suitName){
     return;
   }
   activeSuit = suitName;
-  if (wheelSelector?.isActive) {
-    wheelSelector.setActiveSuit(activeSuit);
+  if (deckSelector?.isActive) {
+    deckSelector.setActiveSuit(activeSuit);
   } else {
     selectedCardId = null;
   }
@@ -380,8 +382,8 @@ function setActiveSuit(suitName){
 
 
 function renderAll(){
-  if (wheelSelector?.isActive) {
-    wheelSelector.render();
+  if (deckSelector?.isActive) {
+    deckSelector.render();
   } else {
     renderCollection();
     renderCardDetail();
@@ -390,6 +392,59 @@ function renderAll(){
   renderBattleDeck();
   updateProfileStats();
   updateCollectionEmptyState();
+}
+
+function initMenuDrawers(){
+  if (document.body) {
+    document.body.classList.add("menu-only");
+  }
+  const topPanels = Array.from(document.querySelectorAll(".top-menu-panel"));
+  topPanels.forEach(panel => {
+    panel.classList.add("menu-drawer");
+    let tab = panel.querySelector(".menu-tab");
+    if (!tab) {
+      tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "menu-tab";
+      tab.textContent = "Screen Menu";
+      panel.prepend(tab);
+    }
+    const screenLinks = panel.querySelector(".screen-links");
+    if (screenLinks && !screenLinks.parentElement.classList.contains("menu-body")) {
+      const wrap = document.createElement("div");
+      wrap.className = "menu-body";
+      screenLinks.parentNode.insertBefore(wrap, screenLinks);
+      wrap.appendChild(screenLinks);
+    }
+    panel.classList.add("collapsed");
+    tab.addEventListener("click", () => panel.classList.toggle("collapsed"));
+  });
+
+  const bottomDrawers = Array.from(document.querySelectorAll(".bottom-drawer"));
+  bottomDrawers.forEach(drawer => {
+    const tab = drawer.querySelector("[data-drawer-toggle]");
+    if (!tab) return;
+    tab.addEventListener("click", () => drawer.classList.toggle("collapsed"));
+  });
+}
+
+function initCmsViews(){
+  const viewButtons = Array.from(document.querySelectorAll("[data-view-target]"));
+  const views = Array.from(document.querySelectorAll(".cms-view"));
+  if (!viewButtons.length || !views.length) return;
+
+  const setView = (viewName) => {
+    views.forEach(view => view.classList.toggle("is-active", view.dataset.view === viewName));
+    viewButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.viewTarget === viewName));
+  };
+
+  viewButtons.forEach(btn => {
+    btn.addEventListener("click", () => setView(btn.dataset.viewTarget));
+  });
+
+  const initial = viewButtons.find(btn => btn.classList.contains("active"))?.dataset.viewTarget
+    || viewButtons[0].dataset.viewTarget;
+  setView(initial);
 }
 
 function initMobileSections(){
@@ -409,7 +464,7 @@ function initMobileSections(){
   setActive(initial);
 }
 
-const wheelSelector = window.WheelSelector?.create({
+const deckSelector = window.DeckSelector?.create({
   wheelRanksOrder,
   councils,
   councilNames,
@@ -420,13 +475,6 @@ const wheelSelector = window.WheelSelector?.create({
   getCollection: () => collection,
   onAddToBattle: addToBattle,
   onUpgrade: upgradeCard,
-  onCycleSuit: () => {
-    cycleIndex = (cycleIndex + 1) % suitCycle.length;
-    setActiveSuit(suitCycle[cycleIndex].name);
-  },
-  onSelectSuit: (suitName) => {
-    setActiveSuit(suitName);
-  },
   onSelectionChange: ({ cardId }) => {
     selectedCardId = cardId;
   }
@@ -487,6 +535,8 @@ try {
 if (document.body) document.body.dataset.suit = activeSuit.toLowerCase();
 syncSuitButton();
 renderAll();
+initMenuDrawers();
+initCmsViews();
 initMobileSections();
 
 

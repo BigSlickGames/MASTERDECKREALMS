@@ -6,19 +6,23 @@
   <title>Card Forge - Battle</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
-<body>
-  <div class="screen-frame" aria-hidden="true"></div>
-  <div class="screen-effects" aria-hidden="true">
-    <span class="zoop main"></span>
-    <span class="zoop alt"></span>
-  </div>
-  <div class="screen-off" aria-hidden="true">POWER OFF</div>
-  <label class="power-toggle power-dock" for="powerToggleDock">
-    <input type="checkbox" id="powerToggleDock" checked />
-    <span class="power-slider" aria-hidden="true"></span>
-    <span class="power-label">Power</span>
-  </label>
-  <div class="app">
+<body class="phone-preview">
+  <div class="device-preview">
+    <div class="device-shell">
+      <div class="device-screen">
+        <div class="device-notch" aria-hidden="true"></div>
+        <div class="screen-frame" aria-hidden="true"></div>
+        <div class="screen-effects" aria-hidden="true">
+          <span class="zoop main"></span>
+          <span class="zoop alt"></span>
+        </div>
+        <div class="screen-off" aria-hidden="true">POWER OFF</div>
+        <label class="power-toggle power-dock" for="powerToggleDock">
+          <input type="checkbox" id="powerToggleDock" checked />
+          <span class="power-slider" aria-hidden="true"></span>
+          <span class="power-label">Power</span>
+        </label>
+        <div class="app">
     <header class="topbar glass">
     <div class="brand">
       <div class="brand-mark">CF</div>
@@ -120,6 +124,9 @@
       <a href="./explore.html">Explore</a>
     </nav>
 
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="./app.js"></script>

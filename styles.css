@@ -444,6 +444,154 @@ body[data-suit="spades"]{
   opacity:.7;
   pointer-events:none;
 }
+
+/* PHONE PREVIEW WRAP */
+body.phone-preview{
+  overflow:auto;
+}
+.device-preview{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:24px;
+}
+.device-shell{
+  width:390px;
+  height:844px;
+  border-radius:46px;
+  padding:14px;
+  background:
+    linear-gradient(180deg, #1a1f26, #090c12),
+    radial-gradient(120px 60px at 20% 10%, rgba(255,255,255,.12), transparent 70%);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,.55),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  position:relative;
+}
+.device-screen{
+  position:relative;
+  width:100%;
+  height:100%;
+  border-radius:32px;
+  overflow:hidden;
+  background: #030508;
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,.08),
+    inset 0 0 60px rgba(0,0,0,.65);
+}
+.device-notch{
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform: translateX(-50%);
+  width:160px;
+  height:24px;
+  border-radius:999px;
+  background: linear-gradient(180deg, #0b0f16, #04070c);
+  box-shadow:
+    inset 0 0 8px rgba(0,0,0,.8),
+    0 2px 6px rgba(0,0,0,.5);
+  z-index:10;
+}
+.device-screen .screen-frame,
+.device-screen .screen-effects,
+.device-screen .screen-off{
+  position:absolute;
+}
+.device-screen .power-dock{
+  position:absolute;
+  bottom:14px;
+  right:14px;
+}
+.device-screen .app{
+  height:100%;
+  overflow:auto;
+}
+
+/* MENU-ONLY TOP BAR */
+body.menu-only .brand,
+body.menu-only .hud-typing,
+body.menu-only .topbar .top-suit,
+body.menu-only .topbar .top-actions,
+body.menu-only .topbar .status{
+  display:none;
+}
+body.menu-only .topbar{
+  justify-content:center;
+}
+body.menu-only .topbar .top-menu-panel{
+  flex:1 1 auto;
+}
+
+/* DRAWER MENUS */
+.menu-drawer{
+  position:relative;
+  padding-top:22px;
+  overflow:hidden;
+}
+.menu-tab{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform: translate(-50%, -50%);
+  border:1px solid var(--stroke);
+  background: rgba(5,10,16,.85);
+  color:var(--txt);
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform: uppercase;
+  padding:6px 12px;
+  cursor:pointer;
+  border-radius:999px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.45);
+}
+.menu-body{
+  max-height:220px;
+  overflow:hidden;
+  transition: max-height .25s ease, opacity .25s ease;
+  opacity:1;
+}
+.menu-drawer.collapsed .menu-body{
+  max-height:0;
+  opacity:0;
+  pointer-events:none;
+}
+.menu-drawer.collapsed .panel-title{
+  display:none;
+}
+
+.bottom-drawer{
+  position:relative;
+  margin-top:16px;
+  padding-top:22px;
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  background: rgba(8,12,18,.7);
+  box-shadow: 0 18px 32px rgba(0,0,0,.4);
+}
+.bottom-drawer .bottom-tab{
+  top:0;
+}
+.bottom-drawer .drawer-body{
+  max-height:520px;
+  overflow:hidden;
+  transition: max-height .25s ease, opacity .25s ease;
+  opacity:1;
+}
+.bottom-drawer.collapsed .drawer-body{
+  max-height:0;
+  opacity:0;
+  padding:0;
+  pointer-events:none;
+}
+
+@media (max-width: 480px){
+  .device-shell{
+    width:min(94vw, 390px);
+    height:min(88vh, 844px);
+  }
+  .device-preview{padding:14px;}
+}
 .suit-dial .dial-sparks{
   position:absolute;
   inset:6px;
@@ -806,6 +954,61 @@ body[data-suit="spades"]{
 .collection-panel{min-height:0; overflow:auto}
 .panel-head{display:flex; justify-content:space-between; align-items:center; gap:10px}
 .panel-meta{font-size:12px; color:var(--muted)}
+.cms-display{
+  display:grid;
+  place-items:center;
+  min-height:420px;
+  padding:6px 0 12px;
+}
+.cms-view{
+  display:none;
+  width:100%;
+}
+.cms-view.is-active{
+  display:grid;
+  place-items:center;
+}
+.cms-view-panel{
+  width:min(560px, 100%);
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  padding:16px;
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 0 24px rgba(0,0,0,.35);
+}
+.cms-console{
+  margin-top:12px;
+  padding:14px;
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  background: rgba(255,255,255,.04);
+  display:grid;
+  gap:10px;
+}
+.cms-console-head{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+}
+.cms-console-head .top-suit{
+  margin-left:0;
+}
+.cms-console-head .suit-dial{
+  width:90px;
+  height:90px;
+}
+.cms-console-buttons{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap:8px;
+}
+.cms-console .btn.active{
+  color:var(--txt);
+  border-color: rgba(255,255,255,.35);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--brand) 40%, transparent);
+}
 .collection-empty{
   border:1px dashed rgba(255,255,255,.18);
   border-radius:16px;
@@ -1368,6 +1571,11 @@ body[data-power="off"] .power-dock{
   .panel-title{flex-wrap:wrap}
   .top-suit .suit-dial{width:88px; height:88px}
   .top-suit .dial-icon{font-size:34px}
+  .cms-display{min-height:340px}
+  .cms-view-panel{padding:12px}
+  .cms-console-buttons{grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))}
+  .cms-console-head{justify-content:center}
+  .bottom-drawer{margin-top:12px}
   .mobile-section-tabs{
     display:flex;
     gap:6px;

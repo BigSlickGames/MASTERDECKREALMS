@@ -486,6 +486,17 @@
   text-transform: uppercase;
   color: color-mix(in srgb, var(--brand) 70%, #fff);
 }
+.wheel-card-owned{
+  display:none;
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px dashed color-mix(in srgb, var(--accent) 60%, #fff);
+  color: color-mix(in srgb, var(--accent) 70%, #fff);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  font-size:10px;
+  letter-spacing:1.2px;
+  text-transform: uppercase;
+}
 .wheel-card-stats{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -38,6 +38,7 @@
           <div class="wheel-card-suit" id="wheelCardSuit">&#x2665;</div>
         </div>
         <div class="wheel-card-title" id="wheelCardTitle">2 OF HEARTS - NORTH</div>
+        <div class="wheel-card-owned" id="wheelCardOwned">CARD NOT OWNED</div>
         <div class="wheel-card-stats">
           <div class="wheel-card-stat" id="wheelStatLevel">Level: 1</div>
           <div class="wheel-card-stat" id="wheelStatCopies">Copies: 0</div>
@@ -78,6 +79,7 @@
     let reelCouncils = null;
     let reelSuits = null;
     let wheelCardTitle = null;
+    let wheelCardOwned = null;
     let wheelStatLevel = null;
     let wheelStatCopies = null;
     let wheelStatPower = null;
@@ -101,6 +103,9 @@
       councils: { lock: false, timer: null },
       suits: { lock: false, timer: null }
     };
+    const WHEEL_PIXEL_SCALE = 0.25;
+    const WHEEL_LINE_STEP = 0.6;
+    const WHEEL_MAX_STEP = 0.9;
 
     function bindElements() {
       reelSelector = document.getElementById("reelSelector");
@@ -108,6 +113,7 @@
       reelCouncils = document.getElementById("reelCouncils");
       reelSuits = document.getElementById("reelSuits");
       wheelCardTitle = document.getElementById("wheelCardTitle");
+      wheelCardOwned = document.getElementById("wheelCardOwned");
       wheelStatLevel = document.getElementById("wheelStatLevel");
       wheelStatCopies = document.getElementById("wheelStatCopies");
       wheelStatPower = document.getElementById("wheelStatPower");
@@ -225,6 +231,26 @@
       return false;
     }
 
+    function attachWheelDamping(reel) {
+      if (!reel) return;
+      reel.addEventListener("wheel", (event) => {
+        if (event.ctrlKey) return;
+        if (Math.abs(event.deltaY) < 0.01) return;
+        const itemHeight = getReelItemHeight(reel);
+        let delta = 0;
+        if (event.deltaMode === WheelEvent.DOM_DELTA_LINE || event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+          delta = Math.sign(event.deltaY) * itemHeight * WHEEL_LINE_STEP;
+        } else {
+          const scaled = event.deltaY * WHEEL_PIXEL_SCALE;
+          const maxStep = itemHeight * WHEEL_MAX_STEP;
+          delta = Math.max(-maxStep, Math.min(maxStep, scaled));
+        }
+        if (!delta) return;
+        reel.scrollBy({ top: delta, behavior: "auto" });
+        event.preventDefault();
+      }, { passive: false });
+    }
+
     function handleScroll(reel, stateKey, getIndex, setIndex) {
       if (!reel) return;
       reel.addEventListener("scroll", () => {
@@ -283,9 +309,10 @@
       const owned = meta.count > 0;
 
       if (wheelCardTitle) {
-        wheelCardTitle.textContent = owned
-          ? `${card.rank} of ${card.suit} - ${councilLabel}`.toUpperCase()
-          : "CARD TO COLLECT";
+        wheelCardTitle.textContent = `${card.rank} of ${card.suit} - ${councilLabel}`.toUpperCase();
+      }
+      if (wheelCardOwned) {
+        wheelCardOwned.style.display = owned ? "none" : "inline-flex";
       }
       if (wheelCardRank) wheelCardRank.textContent = card.rank;
       if (wheelCardSuit) wheelCardSuit.textContent = suitToSymbol[activeSuit] || "";
@@ -371,6 +398,8 @@
         "suits",
         (suit) => `<span class="reel-suit">${suit.icon}</span><span class="reel-suit-label">${suit.name}</span>`
       );
+
+      [reelRanks, reelCouncils, reelSuits].forEach(attachWheelDamping);
 
       handleScroll(reelRanks, "ranks", () => selectedRankIndex, setRankIndex);
       handleScroll(reelCouncils, "councils", () => selectedCouncilIndex, setCouncilIndex);

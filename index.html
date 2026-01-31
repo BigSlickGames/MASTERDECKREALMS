@@ -79,8 +79,16 @@
 
 
     <main class="main">
+      <div class="mobile-section-tabs" aria-label="Section tabs">
+        <button class="active" data-section="collection">Collection</button>
+        <button data-section="decks">Deck</button>
+        <button data-section="battle">Battle</button>
+        <button data-section="profile">Profile</button>
+        <button data-section="upgrades">Upgrades</button>
+        <button data-section="holo">Holo</button>
+      </div>
       <aside class="left">
-        <section class="panel profile-panel glass">
+        <section class="panel profile-panel glass" data-mobile-section="profile">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>
@@ -110,7 +118,7 @@
           </div>
         </section>
 
-        <section class="panel upgrades-panel glass">
+        <section class="panel upgrades-panel glass" data-mobile-section="upgrades">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>
@@ -132,7 +140,7 @@
       </aside>
 
       <section class="center single">
-        <section class="panel collection-panel glass">
+        <section class="panel collection-panel glass" data-mobile-section="collection">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>
@@ -155,7 +163,7 @@
       </section>
 
       <aside class="right">
-        <section class="panel holo-panel glass">
+        <section class="panel holo-panel glass" data-mobile-section="holo">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>
@@ -176,7 +184,7 @@
             <div class="holo-base"></div>
           </div>
         </section>
-        <section class="panel decks-panel glass">
+        <section class="panel decks-panel glass" data-mobile-section="decks">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>
@@ -189,7 +197,7 @@
           <div class="deck-list" id="fullDeckList"></div>
         </section>
 
-        <section class="panel battle-panel glass">
+        <section class="panel battle-panel glass" data-mobile-section="battle">
           <div class="hud-corners"></div>
           <div class="neon-rail"></div>
           <div class="steel-grill"></div>

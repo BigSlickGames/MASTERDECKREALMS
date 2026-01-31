@@ -342,6 +342,7 @@
   .wheel-dial{--wheel-radius: 74px; --council-radius: 40px}
   .wheel-rank{
     transform:
+      translate(var(--wheel-center-x), var(--wheel-center-y))
       rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--wheel-radius)));
   }
@@ -353,4 +354,14 @@
   .wheel-card-rank{font-size:26px}
   .wheel-card-suit{font-size:18px}
   .wheel-card-stats{grid-template-columns: 1fr}
+}
+
+@media (max-width: 420px){
+  .wheel-dial{width:180px; height:180px}
+  .wheel-dial{--wheel-radius: 62px; --council-radius: 34px}
+  .wheel-inner{inset:46px}
+  .wheel-core{--core-size: 50px}
+  .wheel-core .wheel-suit-btn .dial-icon{font-size:22px}
+  .wheel-physical{width:110px; height:148px}
+  .wheel-card-rank{font-size:24px}
 }

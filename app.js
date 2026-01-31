@@ -392,6 +392,23 @@ function renderAll(){
   updateCollectionEmptyState();
 }
 
+function initMobileSections(){
+  const tabsWrap = document.querySelector(".mobile-section-tabs");
+  if (!tabsWrap) return;
+  const tabs = Array.from(tabsWrap.querySelectorAll("[data-section]"));
+  const panels = Array.from(document.querySelectorAll(".panel[data-mobile-section]"));
+  if (!tabs.length || !panels.length) return;
+
+  const setActive = (section) => {
+    tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.section === section));
+    panels.forEach(panel => panel.classList.toggle("mobile-active", panel.dataset.mobileSection === section));
+  };
+
+  tabs.forEach(btn => btn.addEventListener("click", () => setActive(btn.dataset.section)));
+  const initial = tabs.find(btn => btn.classList.contains("active"))?.dataset.section || tabs[0].dataset.section;
+  setActive(initial);
+}
+
 const wheelSelector = window.WheelSelector?.create({
   wheelRanksOrder,
   councils,
@@ -467,6 +484,7 @@ try {
 if (document.body) document.body.dataset.suit = activeSuit.toLowerCase();
 syncSuitButton();
 renderAll();
+initMobileSections();
 
 
 function setPowerState(isOn){

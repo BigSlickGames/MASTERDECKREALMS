@@ -424,6 +424,9 @@ const wheelSelector = window.WheelSelector?.create({
     cycleIndex = (cycleIndex + 1) % suitCycle.length;
     setActiveSuit(suitCycle[cycleIndex].name);
   },
+  onSelectSuit: (suitName) => {
+    setActiveSuit(suitName);
+  },
   onSelectionChange: ({ cardId }) => {
     selectedCardId = cardId;
   }

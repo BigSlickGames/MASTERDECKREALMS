@@ -1,29 +1,40 @@
-<div class="wheel-layout" id="wheelLayout">
-  <div class="wheel-dial" id="wheelDial">
-    <div class="wheel-outer" id="wheelRanks"></div>
-    <div class="wheel-inner-ring" id="wheelCouncilRing"></div>
-    <div class="wheel-inner">
-      <div class="wheel-core">
-        <button class="suit-dial wheel-suit-btn" id="wheelSuitButton" aria-label="Suit selection button">
-          <span class="dial-shell"></span>
-          <span class="dial-ring"></span>
-          <span class="dial-glass"></span>
-          <span class="dial-sheen"></span>
-          <span class="dial-sparks"></span>
-          <span class="dial-icon" id="wheelSuitIcon">&#x2663;</span>
-        </button>
+<div class="reel-selector" id="reelSelector">
+  <div class="reel-columns">
+    <div class="reel-stack">
+      <div class="reel-head">
+        <span class="reel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 6h6v12H4V6zm10 0h6v12h-6V6zM11 8h2v8h-2V8z"/></svg>
+        </span>
+        <span class="reel-label">Rank</span>
       </div>
+      <div class="reel" id="reelRanks" aria-label="Rank selector"></div>
     </div>
-    <div class="wheel-pointer"></div>
-    <button class="wheel-step left btn ghost tiny" id="wheelPrev" aria-label="Previous card"><span class="wheel-step-label">Prev</span></button>
-    <button class="wheel-step right btn ghost tiny" id="wheelNext" aria-label="Next card"><span class="wheel-step-label">Next</span></button>
+    <div class="reel-stack">
+      <div class="reel-head">
+        <span class="reel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2l4 8h-8l4-8zm-6 10h12l-6 10-6-10z"/></svg>
+        </span>
+        <span class="reel-label">Council</span>
+      </div>
+      <div class="reel" id="reelCouncils" aria-label="Council selector"></div>
+    </div>
+    <div class="reel-stack">
+      <div class="reel-head">
+        <span class="reel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3 4-3 4-3-4 3-4zm7 7l3 4-3 4-3-4 3-4zM5 9l3 4-3 4-3-4 3-4zm7 7l3 4-3 4-3-4 3-4z"/></svg>
+        </span>
+        <span class="reel-label">Suit</span>
+      </div>
+      <div class="reel" id="reelSuits" aria-label="Suit selector"></div>
+    </div>
   </div>
+  <div class="reel-focus" aria-hidden="true"></div>
   <div class="wheel-card-wrap">
     <div class="wheel-physical" id="wheelPhysical">
       <div class="wheel-card-face">
         <div class="wheel-card-header">
           <div class="wheel-card-rank" id="wheelCardRank">2</div>
-          <div class="wheel-card-suit" id="wheelCardSuit">♥</div>
+          <div class="wheel-card-suit" id="wheelCardSuit">&#x2665;</div>
         </div>
         <div class="wheel-card-title" id="wheelCardTitle">2 OF HEARTS - NORTH</div>
         <div class="wheel-card-stats">

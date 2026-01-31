@@ -1122,6 +1122,9 @@ body[data-suit="spades"]{
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap:8px;
 }
+.mobile-nav{
+  display:none;
+}
 
 /* Global zoops + HUD */
 .screen-effects .zoop{
@@ -1272,9 +1275,101 @@ body[data-power="off"] .power-dock{
   body{overflow:auto}
 }
 @media (max-width: 720px){
-  .topbar{flex-direction:column; align-items:flex-start}
-  .top-actions{flex-wrap:wrap; justify-content:flex-start}
-  .suits{flex-direction:column; align-items:flex-start}
-  .screen-menu{margin-left:0}
-  .screen-links{grid-template-columns: repeat(2, minmax(0, 1fr))}
+  body{overflow:auto}
+  .app{padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom))}
+  .panel{padding:10px}
+  .topbar{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
+  .brand{min-width:auto}
+  .top-actions{
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    width:100%;
+  }
+  .top-suit{
+    order:3;
+    width:100%;
+    justify-content:flex-start;
+    margin-left:0;
+  }
+  .topbar .top-menu-panel{
+    order:4;
+    width:100%;
+  }
+  .screen-links{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width: thin;
+  }
+  .screen-link{
+    min-width:120px;
+    flex:0 0 auto;
+  }
+  .main{gap:10px}
+  .left,.right{
+    flex-direction:column;
+    width:100%;
+  }
+  .center{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .collection-panel,
+  .viewer-panel,
+  .decks-panel,
+  .battle-panel{
+    min-height:auto;
+  }
+  .chips, .profile{
+    width:100%;
+    justify-content:space-between;
+  }
+  .top-actions .chips{
+    flex-wrap:wrap;
+  }
+  .card-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .explore-map{
+    height:240px;
+  }
+  .holo-display{
+    height:160px;
+  }
+  .mobile-nav{
+    display:flex;
+    position:sticky;
+    bottom:8px;
+    margin-top:6px;
+    padding:8px;
+    gap:6px;
+    border:1px solid rgba(255,255,255,.12);
+    background: rgba(8,12,18,.86);
+    backdrop-filter: blur(10px);
+    border-radius:14px;
+    z-index:20;
+    overflow-x:auto;
+  }
+  .mobile-nav a{
+    flex:0 0 auto;
+    padding:8px 10px;
+    border-radius:10px;
+    font-size:11px;
+    text-transform: uppercase;
+    letter-spacing:.6px;
+    color:var(--muted);
+    border:1px solid rgba(255,255,255,.12);
+    text-decoration:none;
+    background: rgba(255,255,255,.04);
+  }
+  .mobile-nav a.active{
+    color:var(--txt);
+    border-color: rgba(255,255,255,.35);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--brand) 35%, transparent);
+  }
 }

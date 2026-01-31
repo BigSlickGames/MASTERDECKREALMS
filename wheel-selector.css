@@ -339,10 +339,18 @@
 
 @media (max-width: 720px){
   .wheel-dial{width:210px; height:210px}
-  .wheel-dial{--wheel-radius: 78px; --council-radius: 42px}
+  .wheel-dial{--wheel-radius: 74px; --council-radius: 40px}
   .wheel-rank{
     transform:
       rotate(calc(var(--i) * 360deg / var(--count)))
       translateY(calc(-1 * var(--wheel-radius)));
   }
+  .wheel-inner{inset:54px}
+  .wheel-core{--core-size: 56px}
+  .wheel-core .wheel-suit-btn .dial-icon{font-size:26px}
+  .wheel-card-wrap{min-height:180px}
+  .wheel-physical{width:120px; height:160px}
+  .wheel-card-rank{font-size:26px}
+  .wheel-card-suit{font-size:18px}
+  .wheel-card-stats{grid-template-columns: 1fr}
 }

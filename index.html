@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Card Forge - CMS</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./wheel-selector.css" />
+</head>
+<body>
+  <div class="screen-frame" aria-hidden="true"></div>
+  <div class="screen-effects" aria-hidden="true">
+    <span class="zoop main"></span>
+    <span class="zoop alt"></span>
+  </div>
+  <div class="screen-off" aria-hidden="true">POWER OFF</div>
+  <label class="power-toggle power-dock" for="powerToggleDock">
+    <input type="checkbox" id="powerToggleDock" checked />
+    <span class="power-slider" aria-hidden="true"></span>
+    <span class="power-label">Power</span>
+  </label>
+  <div class="app">
+    <header class="topbar glass">
+    <div class="brand">
+      <div class="brand-mark">CF</div>
+      <div>
+        <div class="brand-title">CMS</div>
+<div class="hud-typing">SYSTEM LINK: ACTIVE</div>
+      </div>
+    </div>
+
+    <section class="panel upgrades-panel glass top-menu-panel">
+      <div class="hud-corners"></div>
+      <div class="neon-rail"></div>
+      <div class="steel-grill"></div>
+      <div class="panel-title">
+        <span class="panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 5h8v6H3V5zm10 0h8v6h-8V5zM3 13h8v6H3v-6zm10 0h8v6h-8v-6z"/></svg>
+        </span>
+        <span class="panel-label">Screens</span>
+        <span style="color:#ff2a2a;font-weight:900;">ICON TEST</span>
+      </div>
+      <div class="screen-links">
+        <a class="screen-link active" href="./index.html">CMS</a>
+        <a class="screen-link" href="./recruit.html">Recruit</a>
+        <a class="screen-link" href="./store.html">Card Store</a>
+        <a class="screen-link" href="./battle.html">Battle</a>
+        <a class="screen-link" href="./explore.html">Explore</a>
+      </div>
+    </section>
+
+    <div class="top-suit">
+      <button id="suitButton" class="suit-dial" aria-label="Suit selection button">
+        <span class="dial-shell"></span>
+        <span class="dial-ring"></span>
+        <span class="dial-glass"></span>
+        <span class="dial-sheen"></span>
+        <span class="dial-sparks"></span>
+        <span class="dial-icon" id="suitIcon">&#x2663;</span>
+      </button>
+    </div>
+
+    <div class="top-actions">
+<div class="chips">
+        <div class="chips-label">Chips</div>
+        <div class="chips-value" id="chipsValue">1200</div>
+        <button class="btn tiny" id="btnAddChips">Add</button>
+      </div>
+      <div class="profile">
+        <div class="avatar">P1</div>
+        <div>
+          <div class="profile-name">Player One</div>
+          <div class="profile-level">Collector Lv 6</div>
+        </div>
+      </div>
+    </div>
+    <div class="status" id="statusLine">System ready.</div>
+</header>
+
+
+    <main class="main">
+      <aside class="left">
+        <section class="panel profile-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z"/></svg>
+            </span>
+            <span class="panel-label">Profile</span>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">Rank</div>
+            <div class="stat-value">Rookie IV</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">Total Cards</div>
+            <div class="stat-value" id="totalCards">0</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-label">Upgrades</div>
+            <div class="stat-value" id="totalUpgrades">0</div>
+          </div>
+          <div class="progress">
+            <div class="progress-label">Season Progress</div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 62%"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel upgrades-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3l4 4h-3v6h-2V7H8l4-4zm-4 12h2v6h2v-6h2l-3-4-3 4z"/></svg>
+            </span>
+            <span class="panel-label">Upgrade Lab</span>
+          </div>
+          <div class="upgrade-card">
+            <div class="upgrade-name">Forge Boost</div>
+            <div class="upgrade-sub">Upgrade cards with duplicate copies.</div>
+          </div>
+          <div class="upgrade-card">
+            <div class="upgrade-name">Battle Prep</div>
+            <div class="upgrade-sub">Build a 5-card battle deck.</div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="center single">
+        <section class="panel collection-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-head">
+            <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 6h11v12H4V6zm2 2v8h7V8H6zm9-2h5v12h-5V6z"/></svg>
+            </span>
+            <span class="panel-label">Collection</span>
+          </div>
+            <div class="panel-meta">Active suit: <span id="activeSuitLabel">Hearts</span></div>
+          </div>
+          <div class="collection-empty" id="collectionEmpty">
+            <div class="collection-empty-title">Welcome, Collector</div>
+            <div class="collection-empty-sub">Generate a starter deck to begin forging your collection.</div>
+            <button class="btn primary" id="btnGenerateDeck">Generate Suit Deck</button>
+          </div>
+          <div id="wheelModuleHost"></div>
+        </section>
+      </section>
+
+      <aside class="right">
+        <section class="panel holo-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4zm0 2.2L7 7.8v8.4l5 2.8 5-2.8V7.8l-5-2.6z"/></svg>
+            </span>
+            <span class="panel-label">Hologram Pod</span>
+          </div>
+          <div class="holo-display">
+            <div class="holo-card">
+              <div class="holo-title">CARD SIGNAL</div>
+              <div class="holo-lines">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="holo-meta">PROJECTOR LINK OK</div>
+            </div>
+            <div class="holo-base"></div>
+          </div>
+        </section>
+        <section class="panel decks-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 4h10v3H6V4zm-2 5h10v3H4V9zm2 5h10v3H6v-3zm2 5h10v1H8v-1z"/></svg>
+            </span>
+            <span class="panel-label">Complete Deck</span>
+          </div>
+          <div class="deck-list" id="fullDeckList"></div>
+        </section>
+
+        <section class="panel battle-panel glass">
+          <div class="hud-corners"></div>
+          <div class="neon-rail"></div>
+          <div class="steel-grill"></div>
+          <div class="panel-title">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 4l4 4-2 2-4-4L7 4zm10 0l2 2-4 4-2-2 4-4zM5 14l4-4 2 2-4 4H5v-2zm14 0v2h-2l-4-4 2-2 4 4z"/></svg>
+            </span>
+            <span class="panel-label">Battle Deck</span>
+          </div>
+          <div class="battle-slots" id="battleSlots"></div>
+          <button class="btn ghost" id="btnClearBattle">Clear Battle Deck</button>
+        </section>
+      </aside>
+    </main>
+
+  </div>
+
+  <script src="./wheel-selector.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

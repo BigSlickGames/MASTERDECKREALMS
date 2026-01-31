@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Card Forge - Explore</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+</head>
+<body>
+  <div class="screen-frame" aria-hidden="true"></div>
+  <div class="screen-effects" aria-hidden="true">
+    <span class="zoop main"></span>
+    <span class="zoop alt"></span>
+  </div>
+  <div class="screen-off" aria-hidden="true">POWER OFF</div>
+  <label class="power-toggle power-dock" for="powerToggleDock">
+    <input type="checkbox" id="powerToggleDock" checked />
+    <span class="power-slider" aria-hidden="true"></span>
+    <span class="power-label">Power</span>
+  </label>
+  <div class="app">
+    <header class="topbar glass">
+    <div class="brand">
+      <div class="brand-mark">CF</div>
+      <div>
+        <div class="brand-title">Explore</div>
+<div class="hud-typing">SYSTEM LINK: ACTIVE</div>
+      </div>
+    </div>
+
+    <section class="panel upgrades-panel glass top-menu-panel">
+      <div class="hud-corners"></div>
+      <div class="neon-rail"></div>
+      <div class="steel-grill"></div>
+      <div class="panel-title">
+        <span class="panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 5h8v6H3V5zm10 0h8v6h-8V5zM3 13h8v6H3v-6zm10 0h8v6h-8v-6z"/></svg>
+        </span>
+        <span class="panel-label">Screens</span>
+      </div>
+      <div class="screen-links">
+        <a class="screen-link" href="./index.html">CMS</a>
+        <a class="screen-link" href="./recruit.html">Recruit</a>
+        <a class="screen-link" href="./store.html">Card Store</a>
+        <a class="screen-link" href="./battle.html">Battle</a>
+        <a class="screen-link active" href="./explore.html">Explore</a>
+      </div>
+    </section>
+
+    <div class="top-suit">
+      <button id="suitButton" class="suit-dial" aria-label="Suit selection button">
+        <span class="dial-shell"></span>
+        <span class="dial-ring"></span>
+        <span class="dial-glass"></span>
+        <span class="dial-sheen"></span>
+        <span class="dial-sparks"></span>
+        <span class="dial-icon" id="suitIcon">&#x2663;</span>
+      </button>
+    </div>
+
+    <div class="top-actions">
+<div class="chips">
+        <div class="chips-label">Chips</div>
+        <div class="chips-value" id="chipsValue">1200</div>
+        <button class="btn tiny" id="btnAddChips">Add</button>
+      </div>
+      <div class="profile">
+        <div class="avatar">P1</div>
+        <div>
+          <div class="profile-name">Player One</div>
+          <div class="profile-level">Collector Lv 6</div>
+        </div>
+      </div>
+    </div>
+</header>
+
+
+    <main class="main single">
+      <section class="panel explore-panel glass">
+        <div class="hud-corners"></div>
+        <div class="neon-rail"></div>
+        <div class="steel-grill"></div>
+        <div class="panel-title">
+          <span class="panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 4l8 8-8 8-8-8 8-8zm0 3.4L7.4 12 12 16.6 16.6 12 12 7.4z"/></svg>
+          </span>
+          <span class="panel-label">Explore</span>
+        </div>
+        <div class="explore-controls">
+          <div class="explore-status" id="exploreStatus">Enable location to scan nearby streets.</div>
+          <div class="explore-actions">
+            <button class="btn primary" id="btnEnableLocation">Enable Location</button>
+            <button class="btn ghost" id="btnRescan">Rescan Area</button>
+          </div>
+        </div>
+        <div class="explore-map" id="exploreMap"></div>
+        <div class="explore-list" id="exploreList">
+          <div class="explore-list-title">Nearby signals</div>
+          <div class="explore-list-items" id="exploreListItems"></div>
+        </div>
+      </section>
+      <section class="panel holo-panel glass">
+        <div class="hud-corners"></div>
+        <div class="neon-rail"></div>
+        <div class="steel-grill"></div>
+        <div class="panel-title">
+          <span class="panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4zm0 2.2L7 7.8v8.4l5 2.8 5-2.8V7.8l-5-2.6z"/></svg>
+          </span>
+          <span class="panel-label">Hologram Pod</span>
+        </div>
+        <div class="holo-display">
+          <div class="holo-card large">
+            <div class="holo-title">EXPLORE RIFT</div>
+            <div class="holo-grid"></div>
+            <div class="holo-lines">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="holo-meta">SECTOR LOCKED</div>
+          </div>
+          <div class="holo-base"></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="./app.js"></script>
+  <script src="./explore.js"></script>
+</body>
+</html>

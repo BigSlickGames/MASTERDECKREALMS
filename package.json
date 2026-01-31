@@ -1,0 +1,12 @@
+{
+  "name": "console-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "powershell -NoProfile -Command \"Start-Process index.html\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

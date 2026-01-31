@@ -1,0 +1,42 @@
+<div class="wheel-layout" id="wheelLayout">
+  <div class="wheel-dial" id="wheelDial">
+    <div class="wheel-outer" id="wheelRanks"></div>
+    <div class="wheel-inner-ring" id="wheelCouncilRing"></div>
+    <div class="wheel-inner">
+      <div class="wheel-core">
+        <button class="suit-dial wheel-suit-btn" id="wheelSuitButton" aria-label="Suit selection button">
+          <span class="dial-shell"></span>
+          <span class="dial-ring"></span>
+          <span class="dial-glass"></span>
+          <span class="dial-sheen"></span>
+          <span class="dial-sparks"></span>
+          <span class="dial-icon" id="wheelSuitIcon">&#x2663;</span>
+        </button>
+      </div>
+    </div>
+    <div class="wheel-pointer"></div>
+    <button class="wheel-step left btn ghost tiny" id="wheelPrev" aria-label="Previous card"><span class="wheel-step-label">Prev</span></button>
+    <button class="wheel-step right btn ghost tiny" id="wheelNext" aria-label="Next card"><span class="wheel-step-label">Next</span></button>
+  </div>
+  <div class="wheel-card-wrap">
+    <div class="wheel-physical" id="wheelPhysical">
+      <div class="wheel-card-face">
+        <div class="wheel-card-header">
+          <div class="wheel-card-rank" id="wheelCardRank">2</div>
+          <div class="wheel-card-suit" id="wheelCardSuit">♥</div>
+        </div>
+        <div class="wheel-card-title" id="wheelCardTitle">2 OF HEARTS - NORTH</div>
+        <div class="wheel-card-stats">
+          <div class="wheel-card-stat" id="wheelStatLevel">Level: 1</div>
+          <div class="wheel-card-stat" id="wheelStatCopies">Copies: 0</div>
+          <div class="wheel-card-stat" id="wheelStatPower">Power: 1</div>
+          <div class="wheel-card-stat" id="wheelStatSuit">Suit: Hearts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wheel-actions">
+    <button class="btn primary" id="wheelAddToBattle">Add to Battle Deck</button>
+    <button class="btn ghost" id="wheelUpgradeCard">Upgrade</button>
+  </div>
+</div>

@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSG Lobby Console (Mapped to Image)</title>
+  <style>
+    html,body{height:100%;margin:0;background:#070910;overflow:hidden;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .wrap{height:100%;display:grid;place-items:center;padding:12px;box-sizing:border-box}
+
+    /* This box is your image. Everything is positioned as % of this box */
+    .console{
+      position:relative;
+      width:min(1400px, 98vw);
+      aspect-ratio: 1366 / 768; /* matches your art */
+      background:url("lobby.png") center/contain no-repeat;
+      border-radius:18px;
+      filter: drop-shadow(0 24px 40px rgba(0,0,0,.55));
+      user-select:none;
+    }
+
+    /* ======= CLICKABLE SCREEN AREA (where content renders) =======
+       These numbers are tuned to your image.
+       If you ever swap art, tweak these 4 values. */
+    .screen{
+      position:absolute;
+      left: 4.8%;
+      top: 17.0%;
+      width: 90.4%;
+      height: 57.8%;
+      border-radius:18px;
+      overflow:hidden;
+      pointer-events:auto;
+    }
+
+    /* optional: make it feel like it’s behind glass */
+    .screen:after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(900px 380px at 70% 35%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(120deg, rgba(255,255,255,.05), transparent 38%, rgba(0,0,0,.18));
+      pointer-events:none;
+      mix-blend-mode:screen;
+    }
+
+    /* Page container inside screen */
+    .pages{position:absolute; inset:0; padding:2.2%; box-sizing:border-box;}
+    .page{position:absolute; inset:0; opacity:0; transform:translateX(18px); transition:.22s ease; display:grid; grid-template-rows:auto 1fr; gap:12px;}
+    .page.active{opacity:1; transform:translateX(0);}
+
+    .hdr{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 12px; border-radius:14px;
+      background:rgba(10,12,18,.55);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+      color:#eef2ff;
+      font-weight:800;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+    }
+    .badge{
+      font-size:12px; font-weight:700;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.25);
+    }
+
+    .content{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      min-height:0;
+    }
+    .panel{
+      background:rgba(10,12,18,.58);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:14px;
+      backdrop-filter: blur(8px);
+      min-height:0;
+      color:#eef2ff;
+    }
+    .panel h3{margin:0 0 10px 0; font-size:13px; letter-spacing:.5px; opacity:.9; text-transform:uppercase}
+    .btnGrid{display:flex; flex-wrap:wrap; gap:10px;}
+
+    /* Glowy functional button */
+    .gbtn{
+      position:relative;
+      appearance:none; border:none; cursor:pointer;
+      padding:12px 14px;
+      border-radius:14px;
+      color:#eef2ff;
+      font-weight:800;
+      letter-spacing:.2px;
+      background: linear-gradient(180deg, rgba(28,32,46,.92), rgba(12,14,22,.92));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.10),
+        inset 0 -10px 22px rgba(0,0,0,.35),
+        0 12px 18px rgba(0,0,0,.35);
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      overflow:hidden;
+    }
+    .gbtn:before{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius:16px;
+      opacity:0;
+      background:
+        radial-gradient(120px 50px at 25% 25%, rgba(255,122,24,.65), transparent 60%),
+        radial-gradient(160px 60px at 70% 80%, rgba(255,177,74,.35), transparent 60%);
+      transition: opacity .12s ease;
+      pointer-events:none;
+    }
+    .gbtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,122,24,.35);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -10px 22px rgba(0,0,0,.35),
+        0 16px 26px rgba(0,0,0,.45),
+        0 0 28px rgba(255,122,24,.18);
+    }
+    .gbtn:hover:before{opacity:1}
+    .gbtn:active{transform:translateY(1px)}
+
+    .log{
+      margin:0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      line-height:1.45;
+      white-space:pre-wrap;
+      opacity:.95;
+      max-height:100%;
+      overflow:auto;
+    }
+
+    /* ======= BOTTOM SLOT HOTSPOTS (clickable areas OVER your image slots) =======
+       These sit exactly where the oval slots are on your PNG. */
+    .slots{
+      position:absolute;
+      left: 21.2%;
+      top: 83.2%;
+      width: 57.0%;
+      height: 10.2%;
+      display:flex;
+      gap: 2.3%;
+      align-items:center;
+      pointer-events:auto;
+    }
+    .slot{
+      flex:1;
+      height: 62%;
+      border-radius:999px;
+      background: rgba(0,0,0,0.0); /* invisible - it’s a hotspot */
+      border: 1px solid rgba(255,255,255,0.0);
+      cursor:pointer;
+      position:relative;
+      outline:none;
+    }
+    /* tiny glow feedback when active/hover */
+    .slot:hover{ box-shadow: 0 0 26px rgba(255,122,24,.18); }
+    .slot.active{ box-shadow: 0 0 34px rgba(255,122,24,.28); }
+
+    /* DEBUG MODE: press D to show the clickable regions */
+    .debug .screen{ outline:2px dashed rgba(80,220,255,.8); }
+    .debug .slots{ outline:2px dashed rgba(255,120,40,.8); }
+    .debug .slot{ background: rgba(255,120,40,.18); border-color: rgba(255,120,40,.45); }
+
+    @media (max-width: 860px){
+      .content{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="console" id="console">
+      <!-- The REAL screen area on your image -->
+      <div class="screen">
+        <div class="pages" id="pages"></div>
+      </div>
+
+      <!-- The REAL bottom slot row hotspots on your image -->
+      <div class="slots" id="slots"></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== Pages that will "flick" when you click the bottom slots ======
+    const PAGES = [
+      {
+        name: "Play",
+        title: "21 HOLD'EM — LOBBY",
+        leftTitle: "Rooms",
+        buttons: [
+          { label: "Quick Match", onClick: () => log("Quick Match: matchmaking…") },
+          { label: "Create Room", onClick: () => log("Create Room: opening setup…") },
+          { label: "Join Room", onClick: () => log("Join Room: enter code…") },
+          { label: "Tutorial", onClick: () => log("Tutorial: loading…") },
+        ],
+        rightTitle: "Status",
+        rightText:
+          "Online: YES\nPlayers: (hook this to API)\nRegion: AU\n\nTip: Click the bottom slots.\nPress D for debug outlines."
+      },
+      {
+        name: "Shop",
+        title: "SHOP",
+        leftTitle: "Chips & Packs",
+        buttons: [
+          { label: "Buy Chips", onClick: () => log("Store: Buy Chips…") },
+          { label: "Starter Pack", onClick: () => log("Store: Starter Pack…") },
+          { label: "VIP Pass", onClick: () => log("Store: VIP Pass…") },
+        ],
+        rightTitle: "Offers",
+        rightText: "Daily Bonus: READY\nBundles: Coming soon\nCosmetics: On roadmap"
+      },
+      {
+        name: "Games",
+        title: "OTHER GAMES",
+        leftTitle: "Big Slick Line-up",
+        buttons: [
+          { label: "Deck Realms", onClick: () => log("Opening Deck Realms…") },
+          { label: "21 Stack'em", onClick: () => log("Opening 21 Stack'em…") },
+          { label: "Poker-Opoly", onClick: () => log("Opening Poker-Opoly…") },
+        ],
+        rightTitle: "Ad / Promo Slot",
+        rightText: "Replace this panel with your promo banner or carousel."
+      },
+      {
+        name: "Profile",
+        title: "PROFILE",
+        leftTitle: "Account",
+        buttons: [
+          { label: "Login", onClick: () => log("Login: opening…") },
+          { label: "Stats", onClick: () => log("Stats: loading…") },
+          { label: "Settings", onClick: () => log("Settings: opening…") },
+        ],
+        rightTitle: "Player",
+        rightText: "Player: Guest\nRank: —\nWins: 0\n\nHook to auth later."
+      },
+      {
+        name: "Help",
+        title: "HELP",
+        leftTitle: "Support",
+        buttons: [
+          { label: "How To Play", onClick: () => log("How To Play…") },
+          { label: "Report Bug", onClick: () => log("Bug report form…") },
+          { label: "Contact", onClick: () => log("Contact…") },
+        ],
+        rightTitle: "Hints",
+        rightText: "Keyboard: 1–5\nDebug: D\n\nThis is image-mapped to your PNG."
+      },
+    ];
+
+    const pagesEl = document.getElementById("pages");
+    const slotsEl = document.getElementById("slots");
+    const consoleEl = document.getElementById("console");
+
+    let active = 0;
+    let logLines = ["Boot: Console ready."];
+
+    function renderPages(){
+      pagesEl.innerHTML = "";
+      PAGES.forEach((p, i) => {
+        const page = document.createElement("div");
+        page.className = "page" + (i === 0 ? " active" : "");
+        page.innerHTML = `
+          <div class="hdr">
+            <div>${p.title}</div>
+            <div class="badge">Page ${i+1} / ${PAGES.length}</div>
+          </div>
+          <div class="content">
+            <div class="panel">
+              <h3>${p.leftTitle}</h3>
+              <div class="btnGrid" data-grid="${i}"></div>
+            </div>
+            <div class="panel">
+              <h3>${p.rightTitle}</h3>
+              <pre class="log">${p.rightText}\n\n— Console Log —\n${logLines.join("\n")}</pre>
+            </div>
+          </div>
+        `;
+        pagesEl.appendChild(page);
+
+        const grid = page.querySelector(`[data-grid="${i}"]`);
+        p.buttons.forEach(b => {
+          const btn = document.createElement("button");
+          btn.className = "gbtn";
+          btn.textContent = b.label;
+          btn.addEventListener("click", () => b.onClick());
+          grid.appendChild(btn);
+        });
+      });
+    }
+
+    function renderSlots(){
+      slotsEl.innerHTML = "";
+      PAGES.forEach((p, i) => {
+        const s = document.createElement("button");
+        s.className = "slot" + (i === 0 ? " active" : "");
+        s.setAttribute("aria-label", `Open ${p.name}`);
+        s.addEventListener("click", () => setActive(i));
+        slotsEl.appendChild(s);
+      });
+    }
+
+    function setActive(i){
+      if(i === active) return;
+      const pages = [...pagesEl.querySelectorAll(".page")];
+      const slots = [...slotsEl.querySelectorAll(".slot")];
+
+      pages[active].classList.remove("active");
+      slots[active].classList.remove("active");
+
+      active = i;
+
+      pages[active].classList.add("active");
+      slots[active].classList.add("active");
+
+      log(`Page switched: ${PAGES[active].name}`);
+    }
+
+    function log(msg){
+      const t = new Date().toLocaleTimeString();
+      logLines.unshift(`[${t}] ${msg}`);
+      logLines = logLines.slice(0, 8);
+      // update current page log
+      const activeLog = document.querySelector(".page.active .log");
+      if(activeLog){
+        const p = PAGES[active];
+        activeLog.textContent = `${p.rightText}\n\n— Console Log —\n${logLines.join("\n")}`;
+      }
+    }
+
+    // Keyboard shortcuts + debug toggle
+    window.addEventListener("keydown", (e) => {
+      const n = parseInt(e.key, 10);
+      if(!Number.isNaN(n) && n >= 1 && n <= PAGES.length) setActive(n-1);
+      if(e.key.toLowerCase() === "d") consoleEl.classList.toggle("debug");
+      if(e.key === "ArrowRight") setActive((active + 1) % PAGES.length);
+      if(e.key === "ArrowLeft") setActive((active - 1 + PAGES.length) % PAGES.length);
+    });
+
+    renderPages();
+    renderSlots();
+  </script>
+</body>
+</html>

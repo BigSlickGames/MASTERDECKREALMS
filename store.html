@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Card Forge - Card Store</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="screen-frame" aria-hidden="true"></div>
+  <div class="screen-effects" aria-hidden="true">
+    <span class="zoop main"></span>
+    <span class="zoop alt"></span>
+  </div>
+  <div class="screen-off" aria-hidden="true">POWER OFF</div>
+  <label class="power-toggle power-dock" for="powerToggleDock">
+    <input type="checkbox" id="powerToggleDock" checked />
+    <span class="power-slider" aria-hidden="true"></span>
+    <span class="power-label">Power</span>
+  </label>
+  <div class="app">
+    <header class="topbar glass">
+    <div class="brand">
+      <div class="brand-mark">CF</div>
+      <div>
+        <div class="brand-title">Card Store</div>
+<div class="hud-typing">SYSTEM LINK: ACTIVE</div>
+      </div>
+    </div>
+
+    <section class="panel upgrades-panel glass top-menu-panel">
+      <div class="hud-corners"></div>
+      <div class="neon-rail"></div>
+      <div class="steel-grill"></div>
+      <div class="panel-title">
+        <span class="panel-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 5h8v6H3V5zm10 0h8v6h-8V5zM3 13h8v6H3v-6zm10 0h8v6h-8v-6z"/></svg>
+        </span>
+        <span class="panel-label">Screens</span>
+      </div>
+      <div class="screen-links">
+        <a class="screen-link" href="./index.html">CMS</a>
+        <a class="screen-link" href="./recruit.html">Recruit</a>
+        <a class="screen-link active" href="./store.html">Card Store</a>
+        <a class="screen-link" href="./battle.html">Battle</a>
+        <a class="screen-link" href="./explore.html">Explore</a>
+      </div>
+    </section>
+
+    <div class="top-suit">
+      <button id="suitButton" class="suit-dial" aria-label="Suit selection button">
+        <span class="dial-shell"></span>
+        <span class="dial-ring"></span>
+        <span class="dial-glass"></span>
+        <span class="dial-sheen"></span>
+        <span class="dial-sparks"></span>
+        <span class="dial-icon" id="suitIcon">&#x2663;</span>
+      </button>
+    </div>
+
+    <div class="top-actions">
+<div class="chips">
+        <div class="chips-label">Chips</div>
+        <div class="chips-value" id="chipsValue">1200</div>
+        <button class="btn tiny" id="btnAddChips">Add</button>
+      </div>
+      <div class="profile">
+        <div class="avatar">P1</div>
+        <div>
+          <div class="profile-name">Player One</div>
+          <div class="profile-level">Collector Lv 6</div>
+        </div>
+      </div>
+    </div>
+</header>
+
+
+    <main class="main single">
+      <section class="panel shop-panel glass">
+        <div class="hud-corners"></div>
+        <div class="neon-rail"></div>
+        <div class="steel-grill"></div>
+        <div class="panel-title">
+          <span class="panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 6h13l-2 9H8L6 6zm2 11a2 2 0 1 0 2 2 2 2 0 0 0-2-2zm8 0a2 2 0 1 0 2 2 2 2 0 0 0-2-2zM6 4h-2v2h2l1 5h2L6 4z"/></svg>
+          </span>
+          <span class="panel-label">Card Store</span>
+        </div>
+        <div class="shop-grid">
+          <div class="pack">
+            <div class="pack-title">Solo Pack</div>
+            <div class="pack-sub">1 card</div>
+            <div class="pack-cost">Cost: 50 chips</div>
+            <button class="btn primary" data-pack="1" data-cost="50">Buy Pack</button>
+          </div>
+          <div class="pack">
+            <div class="pack-title">Scout Pack</div>
+            <div class="pack-sub">5 cards</div>
+            <div class="pack-cost">Cost: 200 chips</div>
+            <button class="btn primary" data-pack="5" data-cost="200">Buy Pack</button>
+          </div>
+          <div class="pack">
+            <div class="pack-title">Captain Pack</div>
+            <div class="pack-sub">10 cards</div>
+            <div class="pack-cost">Cost: 350 chips</div>
+            <button class="btn primary" data-pack="10" data-cost="350">Buy Pack</button>
+          </div>
+        </div>
+        <div class="status" id="statusLine">Welcome to the store.</div>
+      </section>
+      <section class="panel holo-panel glass">
+        <div class="hud-corners"></div>
+        <div class="neon-rail"></div>
+        <div class="steel-grill"></div>
+        <div class="panel-title">
+          <span class="panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4zm0 2.2L7 7.8v8.4l5 2.8 5-2.8V7.8l-5-2.6z"/></svg>
+          </span>
+          <span class="panel-label">Hologram Pod</span>
+        </div>
+        <div class="holo-display">
+          <div class="holo-card large">
+            <div class="holo-title">SIGNAL ARRAY</div>
+            <div class="holo-grid"></div>
+            <div class="holo-lines">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="holo-meta">PACK ENERGY LOCKED</div>
+          </div>
+          <div class="holo-base"></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,5 +1,13 @@
 .deck-selector{
   --suit-color: #ff2a2a;
+  --deck-card-w: min(440px, 92vw, calc(66vh / 1.4));
+  --deck-card-h: calc(var(--deck-card-w) * 1.4);
+  --deck-stage-w: calc(var(--deck-card-w) * 1.2);
+  --deck-stage-h: calc(var(--deck-card-h) * 1.08);
+  --deck-stack-w: calc(var(--deck-card-w) * 1.03);
+  --deck-stack-h: calc(var(--deck-card-h) * 1.05);
+  --deck-arrow: calc(var(--deck-card-w) * 0.2);
+  --deck-rank: calc(var(--deck-card-w) * 0.15);
   display:grid;
   gap:16px;
   justify-items:center;
@@ -7,15 +15,15 @@
 }
 .deck-stage{
   position:relative;
-  width:min(360px, 90vw);
-  height:456px;
+  width: min(100%, var(--deck-stage-w));
+  height: min(70vh, var(--deck-stage-h));
   display:grid;
   place-items:center;
 }
 .deck-stack{
   position:absolute;
-  width:252px;
-  height:360px;
+  width: var(--deck-stack-w);
+  height: var(--deck-stack-h);
   display:block;
   transform: translate(12px, 18px) rotate(-2deg);
   pointer-events:none;
@@ -41,8 +49,8 @@
 
 .deck-card{
   position:relative;
-  width:240px;
-  height:336px;
+  width: var(--deck-card-w);
+  height: var(--deck-card-h);
   border-radius:22px;
   border:1px solid rgba(255,255,255,.24);
   background:
@@ -85,7 +93,7 @@
   font-family: var(--font-display);
 }
 .deck-card-rank{
-  font-size:38px;
+  font-size: var(--deck-rank);
   letter-spacing:2px;
   text-shadow: 0 0 16px color-mix(in srgb, var(--suit-color) 70%, transparent);
 }
@@ -135,8 +143,8 @@
 }
 .deck-arrow{
   position:absolute;
-  width:50px;
-  height:50px;
+  width: var(--deck-arrow);
+  height: var(--deck-arrow);
   border-radius:14px;
   border:1px solid rgba(255,255,255,.2);
   background:
@@ -221,15 +229,8 @@
   100%{transform: translateX(0) rotateY(0deg);}
 }
 
-@media (max-width: 720px){
-  .deck-stage{width:min(336px, 92vw); height:420px;}
-  .deck-stack{width:240px; height:336px;}
-  .deck-card{width:228px; height:312px;}
-  .deck-card-rank{font-size:34px;}
-}
 @media (max-width: 420px){
-  .deck-stage{height:384px;}
-  .deck-stack{width:216px; height:300px;}
-  .deck-card{width:210px; height:288px;}
-  .deck-card-rank{font-size:31px;}
+  .deck-selector{
+    --deck-card-w: min(400px, 94vw, calc(64vh / 1.4));
+  }
 }

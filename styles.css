@@ -491,13 +491,14 @@ body.menu-only .topbar .top-menu-panel{
 .menu-drawer{
   position:relative;
   padding-top:22px;
-  overflow:hidden;
+  overflow:visible;
 }
 .menu-tab{
   position:absolute;
   left:50%;
   top:0;
   transform: translate(-50%, -50%);
+  z-index:2;
   border:1px solid var(--stroke);
   background: rgba(5,10,16,.85);
   color:var(--txt);
@@ -1619,4 +1620,11 @@ body[data-power="off"] .power-dock{
   .deck-list{max-height:none}
   .holo-panel{min-height:auto}
   .battle-slots{grid-template-columns: 1fr}
+}
+
+body.portrait-mode .topbar .top-menu-panel{
+  display:block;
+}
+body.portrait-mode .screen-links{
+  display:grid;
 }

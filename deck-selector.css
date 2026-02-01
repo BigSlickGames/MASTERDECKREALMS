@@ -171,9 +171,9 @@
   filter: drop-shadow(0 0 8px color-mix(in srgb, var(--suit-color) 60%, transparent));
 }
 .deck-arrow.up{top:8px; left:50%; transform: translateX(-50%);}
-.deck-arrow.right{right:8px; top:50%; transform: translateY(-50%) rotate(90deg);}
-.deck-arrow.down{bottom:8px; left:50%; transform: translateX(-50%) rotate(180deg);}
-.deck-arrow.left{left:8px; top:50%; transform: translateY(-50%) rotate(-90deg);}
+.deck-arrow.right{right:8px; top:50%; transform: translateY(-50%);}
+.deck-arrow.down{bottom:8px; left:50%; transform: translateX(-50%);}
+.deck-arrow.left{left:8px; top:50%; transform: translateY(-50%);}
 .deck-arrow:hover{
   border-color: color-mix(in srgb, var(--suit-color) 60%, #fff);
   box-shadow:

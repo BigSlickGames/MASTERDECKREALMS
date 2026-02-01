@@ -37,10 +37,6 @@
       <div class="deck-center-label" id="deckCouncilLabel">NORTH COUNCIL</div>
     </div>
   </div>
-  <div class="deck-actions">
-    <button class="btn primary" id="deckAddToBattle">Add to Battle Deck</button>
-    <button class="btn ghost" id="deckUpgradeCard">Upgrade</button>
-  </div>
 </div>
 `.trim();
 
@@ -72,8 +68,6 @@
     let deckStatCopies = null;
     let deckStatPower = null;
     let deckStatSuit = null;
-    let deckAddToBattle = null;
-    let deckUpgradeCard = null;
     let deckCouncilLabel = null;
     let deckArrows = [];
 
@@ -95,8 +89,6 @@
       deckStatCopies = document.getElementById("deckStatCopies");
       deckStatPower = document.getElementById("deckStatPower");
       deckStatSuit = document.getElementById("deckStatSuit");
-      deckAddToBattle = document.getElementById("deckAddToBattle");
-      deckUpgradeCard = document.getElementById("deckUpgradeCard");
       deckCouncilLabel = document.getElementById("deckCouncilLabel");
       deckArrows = Array.from(document.querySelectorAll(".deck-arrow"));
     }
@@ -209,8 +201,6 @@
       if (deckStatSuit) deckStatSuit.textContent = `Suit: ${card.suit}`;
       if (deckCardOwned) deckCardOwned.style.display = owned ? "none" : "inline-flex";
       if (deckCardStats) deckCardStats.style.display = owned ? "grid" : "none";
-      if (deckAddToBattle) deckAddToBattle.disabled = !owned;
-      if (deckUpgradeCard) deckUpgradeCard.disabled = !owned;
       if (deckCouncilLabel) deckCouncilLabel.textContent = `${councilLabel} COUNCIL`;
 
       onSelectionChange?.({ cardId, councilIndex: councils.indexOf(council) });
@@ -241,21 +231,6 @@
           const dir = btn.dataset.dir || "up";
           setCouncil(council, dir);
         });
-      });
-
-      deckAddToBattle?.addEventListener("click", () => {
-        const state = getCouncilState();
-        const activeSuit = getActiveSuit?.();
-        const rank = getRankForCouncil(state.activeCouncil);
-        if (!activeSuit || !rank) return;
-        onAddToBattle?.(`${activeSuit}-${state.activeCouncil}-${rank}`);
-      });
-      deckUpgradeCard?.addEventListener("click", () => {
-        const state = getCouncilState();
-        const activeSuit = getActiveSuit?.();
-        const rank = getRankForCouncil(state.activeCouncil);
-        if (!activeSuit || !rank) return;
-        onUpgrade?.(`${activeSuit}-${state.activeCouncil}-${rank}`);
       });
 
       ready = true;

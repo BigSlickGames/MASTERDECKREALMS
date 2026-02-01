@@ -332,7 +332,7 @@ function updateCollectionEmptyState(){
     collectionEmpty.style.display = hasCards ? "none" : "block";
   }
   const host = document.getElementById("wheelModuleHost");
-  if (host) host.style.display = "block";
+  if (host) host.style.display = hasCards ? "block" : "none";
 }
 
 function buyPack(size, cost){
@@ -477,8 +477,24 @@ const deckSelector = window.DeckSelector?.create({
   onUpgrade: upgradeCard,
   onSelectionChange: ({ cardId }) => {
     selectedCardId = cardId;
+    updateConsoleActions();
   }
 }) || null;
+
+function updateConsoleActions(){
+  const addBtn = document.getElementById("btnConsoleAddToBattle");
+  const upgradeBtn = document.getElementById("btnConsoleUpgradeCard");
+  if (!addBtn || !upgradeBtn) return;
+  if (!selectedCardId) {
+    addBtn.disabled = true;
+    upgradeBtn.disabled = true;
+    return;
+  }
+  const meta = collection[selectedCardId];
+  const owned = meta && meta.count > 0;
+  addBtn.disabled = !owned;
+  upgradeBtn.disabled = !owned;
+}
 
 function syncSuitButton(){
   if (!suitButton || !suitIcon) return;
@@ -523,7 +539,18 @@ document.getElementById("btnAddChips")?.addEventListener("click", () => {
   updateChips();
   setStatus("Added 500 chips.");
 });
-document.getElementById("btnGenerateDeck")?.addEventListener("click", generateStarterDeck);
+document.querySelectorAll("[data-generate-deck]").forEach(btn => {
+  btn.addEventListener("click", generateStarterDeck);
+});
+
+document.getElementById("btnConsoleAddToBattle")?.addEventListener("click", () => {
+  if (!selectedCardId) return;
+  addToBattle(selectedCardId);
+});
+document.getElementById("btnConsoleUpgradeCard")?.addEventListener("click", () => {
+  if (!selectedCardId) return;
+  upgradeCard(selectedCardId);
+});
 
 updateChips();
 try {
@@ -538,6 +565,7 @@ renderAll();
 initMenuDrawers();
 initCmsViews();
 initMobileSections();
+updateConsoleActions();
 
 
 function setPowerState(isOn){

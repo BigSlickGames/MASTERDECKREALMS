@@ -7,23 +7,20 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./deck-selector.css" />
 </head>
-<body class="phone-preview">
-  <div class="device-preview">
-    <div class="device-shell">
-      <div class="device-screen">
-        <div class="device-notch" aria-hidden="true"></div>
-        <div class="screen-frame" aria-hidden="true"></div>
-        <div class="screen-effects" aria-hidden="true">
-          <span class="zoop main"></span>
-          <span class="zoop alt"></span>
-        </div>
-        <div class="screen-off" aria-hidden="true">POWER OFF</div>
-        <label class="power-toggle power-dock" for="powerToggleDock">
-          <input type="checkbox" id="powerToggleDock" checked />
-          <span class="power-slider" aria-hidden="true"></span>
-          <span class="power-label">Power</span>
-        </label>
-        <div class="app">
+<body class="portrait-mode">
+  <div class="portrait-stage">
+    <div class="screen-frame" aria-hidden="true"></div>
+    <div class="screen-effects" aria-hidden="true">
+      <span class="zoop main"></span>
+      <span class="zoop alt"></span>
+    </div>
+    <div class="screen-off" aria-hidden="true">POWER OFF</div>
+    <label class="power-toggle power-dock" for="powerToggleDock">
+      <input type="checkbox" id="powerToggleDock" checked />
+      <span class="power-slider" aria-hidden="true"></span>
+      <span class="power-label">Power</span>
+    </label>
+    <div class="app">
     <header class="topbar glass">
       <section class="panel upgrades-panel glass top-menu-panel">
         <div class="hud-corners"></div>
@@ -63,6 +60,11 @@
 
         <div class="cms-display" id="cmsDisplay">
           <div class="cms-view is-active" data-view="cards">
+            <div class="collection-empty cms-empty" id="collectionEmpty">
+              <div class="collection-empty-title">Welcome, Collector</div>
+              <div class="collection-empty-sub">Generate a suit deck to begin forging your collection.</div>
+              <button class="btn primary" id="btnGenerateDeck" data-generate-deck>Generate Suit Deck</button>
+            </div>
             <div id="wheelModuleHost"></div>
           </div>
 
@@ -182,18 +184,10 @@
                     <span class="dial-icon" id="suitIcon">&#x2663;</span>
                   </button>
                 </div>
-                <div class="chips">
-                  <div class="chips-label">Chips</div>
-                  <div class="chips-value" id="chipsValue">1200</div>
-                  <button class="btn tiny" id="btnAddChips">Add</button>
-                </div>
-                <div class="profile">
-                  <div class="avatar">P1</div>
-                  <div>
-                    <div class="profile-name">Player One</div>
-                    <div class="profile-level">Collector Lv 6</div>
-                  </div>
-                </div>
+              </div>
+              <div class="cms-console-actions">
+                <button class="btn primary" id="btnConsoleAddToBattle">Add to Battle Deck</button>
+                <button class="btn ghost" id="btnConsoleUpgradeCard">Upgrade</button>
               </div>
               <div class="status" id="statusLine">System ready.</div>
               <div class="cms-console-buttons">
@@ -203,7 +197,7 @@
                 <button class="btn ghost" data-view-target="holo">Holo</button>
                 <button class="btn ghost" data-view-target="decklist">Decklist</button>
                 <button class="btn ghost" data-view-target="battle">Battle</button>
-                <button class="btn primary" id="btnGenerateDeck">Generate Suit Deck</button>
+                <button class="btn primary" data-generate-deck>Generate Suit Deck</button>
               </div>
             </section>
           </div>
@@ -211,8 +205,6 @@
       </section>
     </main>
 
-        </div>
-      </div>
     </div>
   </div>
 

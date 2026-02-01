@@ -1,13 +1,13 @@
 .deck-selector{
   --suit-color: #ff2a2a;
-  --deck-card-w: min(440px, 92vw, calc(66vh / 1.4));
+  --deck-card-w: min(400px, 90vw, calc(60vh / 1.4));
   --deck-card-h: calc(var(--deck-card-w) * 1.4);
-  --deck-stage-w: calc(var(--deck-card-w) * 1.2);
-  --deck-stage-h: calc(var(--deck-card-h) * 1.08);
-  --deck-stack-w: calc(var(--deck-card-w) * 1.03);
-  --deck-stack-h: calc(var(--deck-card-h) * 1.05);
-  --deck-arrow: calc(var(--deck-card-w) * 0.2);
-  --deck-rank: calc(var(--deck-card-w) * 0.15);
+  --deck-stage-w: calc(var(--deck-card-w) * 1.18);
+  --deck-stage-h: calc(var(--deck-card-h) * 1.06);
+  --deck-stack-w: calc(var(--deck-card-w) * 1.02);
+  --deck-stack-h: calc(var(--deck-card-h) * 1.04);
+  --deck-arrow: calc(var(--deck-card-w) * 0.22);
+  --deck-rank: calc(var(--deck-card-w) * 0.145);
   display:grid;
   gap:16px;
   justify-items:center;
@@ -158,6 +158,11 @@
   pointer-events:auto;
   cursor:pointer;
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  font-family: var(--font-display);
+  font-size: clamp(9px, calc(var(--deck-card-w) * 0.03), 12px);
+  letter-spacing:1.2px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--suit-color) 70%, #fff);
 }
 .deck-arrow svg{
   width:18px;
@@ -231,6 +236,6 @@
 
 @media (max-width: 420px){
   .deck-selector{
-    --deck-card-w: min(400px, 94vw, calc(64vh / 1.4));
+    --deck-card-w: min(360px, 92vw, calc(60vh / 1.4));
   }
 }

@@ -22,18 +22,10 @@
       </div>
     </div>
     <div class="deck-overlay" aria-label="Council navigation">
-      <button class="deck-arrow up" data-dir="up" data-council="N" aria-label="North cards">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4v8h-6v-8H5l7-8z"/></svg>
-      </button>
-      <button class="deck-arrow right" data-dir="right" data-council="E" aria-label="East cards">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4v8h-6v-8H5l7-8z"/></svg>
-      </button>
-      <button class="deck-arrow down" data-dir="down" data-council="S" aria-label="South cards">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4v8h-6v-8H5l7-8z"/></svg>
-      </button>
-      <button class="deck-arrow left" data-dir="left" data-council="W" aria-label="West cards">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 8h-4v8h-6v-8H5l7-8z"/></svg>
-      </button>
+      <button class="deck-arrow up" data-dir="up" data-council="N" aria-label="North cards">North</button>
+      <button class="deck-arrow right" data-dir="right" data-council="E" aria-label="East cards">East</button>
+      <button class="deck-arrow down" data-dir="down" data-council="S" aria-label="South cards">South</button>
+      <button class="deck-arrow left" data-dir="left" data-council="W" aria-label="West cards">West</button>
       <div class="deck-center-label" id="deckCouncilLabel">NORTH COUNCIL</div>
     </div>
   </div>

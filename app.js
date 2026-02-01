@@ -4,6 +4,7 @@ const cardGrid = document.getElementById("cardGrid");
 const cardDetail = document.getElementById("cardDetail");
 const fullDeckList = document.getElementById("fullDeckList");
 const battleSlots = document.getElementById("battleSlots");
+const huntSlots = document.getElementById("huntSlots");
 const totalCards = document.getElementById("totalCards");
 const totalUpgrades = document.getElementById("totalUpgrades");
 const activeSuitLabel = document.getElementById("activeSuitLabel");
@@ -43,6 +44,12 @@ let activeSuit = "Hearts";
 let selectedCardId = null;
 const collection = {};
 const battleDecks = {
+  Hearts: [],
+  Spades: [],
+  Diamonds: [],
+  Clubs: []
+};
+const huntParties = {
   Hearts: [],
   Spades: [],
   Diamonds: [],
@@ -221,6 +228,31 @@ function renderBattleDeck(){
   });
 }
 
+function renderHuntParty(){
+  if (!huntSlots) return;
+  huntSlots.innerHTML = "";
+  const party = huntParties[activeSuit];
+  const maxSlots = 5;
+  for (let i = 0; i < maxSlots; i += 1) {
+    const slot = document.createElement("div");
+    const cardId = party[i];
+    slot.className = "slot" + (cardId ? " filled" : "");
+    if (cardId) {
+      const [suitName, council, rank] = cardId.split("-");
+      slot.innerHTML = `
+        <span>${rank} of ${suitName} (${councilNames[council] || council})</span>
+        <button data-remove="${cardId}">Remove</button>
+      `;
+    } else {
+      slot.textContent = "Empty slot";
+    }
+    huntSlots.appendChild(slot);
+  }
+  Array.from(huntSlots.querySelectorAll("button[data-remove]")).forEach(btn => {
+    btn.addEventListener("click", () => removeFromHunt(btn.dataset.remove));
+  });
+}
+
 function selectCard(id){
   selectedCardId = id;
   renderCardDetail();
@@ -256,6 +288,38 @@ function clearBattleDeck(){
   battleDecks[activeSuit].length = 0;
   renderBattleDeck();
   setStatus("Battle deck cleared.");
+}
+
+function addToHunt(id){
+  if (!collection[id] || collection[id].count < 1) {
+    setStatus("You do not own this card yet.");
+    return;
+  }
+  const party = huntParties[activeSuit];
+  if (party.includes(id)) {
+    setStatus("That card is already in the hunt party.");
+    return;
+  }
+  if (party.length >= 5) {
+    setStatus("Hunt party is full.");
+    return;
+  }
+  party.push(id);
+  setStatus("Card added to hunt party.");
+  renderHuntParty();
+}
+
+function removeFromHunt(id){
+  const party = huntParties[activeSuit];
+  const index = party.indexOf(id);
+  if (index >= 0) party.splice(index, 1);
+  renderHuntParty();
+}
+
+function clearHuntParty(){
+  huntParties[activeSuit].length = 0;
+  renderHuntParty();
+  setStatus("Hunt party cleared.");
 }
 
 function updateProfileStats(){
@@ -390,6 +454,7 @@ function renderAll(){
   }
   renderFullDeck();
   renderBattleDeck();
+  renderHuntParty();
   updateProfileStats();
   updateCollectionEmptyState();
 }
@@ -483,16 +548,21 @@ const deckSelector = window.DeckSelector?.create({
 
 function updateConsoleActions(){
   const addBtn = document.getElementById("btnConsoleAddToBattle");
+  const huntBtn = document.getElementById("btnConsoleAddToHunt");
   const upgradeBtn = document.getElementById("btnConsoleUpgradeCard");
-  if (!addBtn || !upgradeBtn) return;
+  if (!addBtn || !upgradeBtn || !huntBtn) return;
   if (!selectedCardId) {
     addBtn.disabled = true;
+    huntBtn.disabled = true;
     upgradeBtn.disabled = true;
     return;
   }
   const meta = collection[selectedCardId];
   const owned = meta && meta.count > 0;
-  addBtn.disabled = !owned;
+  const battleFull = battleDecks[activeSuit]?.length >= 5;
+  const huntFull = huntParties[activeSuit]?.length >= 5;
+  addBtn.disabled = !owned || battleFull || battleDecks[activeSuit]?.includes(selectedCardId);
+  huntBtn.disabled = !owned || huntFull || huntParties[activeSuit]?.includes(selectedCardId);
   upgradeBtn.disabled = !owned;
 }
 
@@ -534,6 +604,7 @@ packButtons.forEach(btn => {
 });
 
 document.getElementById("btnClearBattle")?.addEventListener("click", clearBattleDeck);
+document.getElementById("btnClearHunt")?.addEventListener("click", clearHuntParty);
 document.getElementById("btnAddChips")?.addEventListener("click", () => {
   chips += 500;
   updateChips();
@@ -546,6 +617,10 @@ document.querySelectorAll("[data-generate-deck]").forEach(btn => {
 document.getElementById("btnConsoleAddToBattle")?.addEventListener("click", () => {
   if (!selectedCardId) return;
   addToBattle(selectedCardId);
+});
+document.getElementById("btnConsoleAddToHunt")?.addEventListener("click", () => {
+  if (!selectedCardId) return;
+  addToHunt(selectedCardId);
 });
 document.getElementById("btnConsoleUpgradeCard")?.addEventListener("click", () => {
   if (!selectedCardId) return;

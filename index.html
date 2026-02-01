@@ -161,6 +161,18 @@
               <button class="btn ghost" id="btnClearBattle">Clear Battle Deck</button>
             </div>
           </div>
+          <div class="cms-view" data-view="hunt">
+            <div class="cms-view-panel">
+              <div class="panel-title">
+                <span class="panel-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 5h14v4H5V5zm0 6h9v8H5v-8zm11 0h3v8h-3v-8z"/></svg>
+                </span>
+                <span class="panel-label">Hunt Party</span>
+              </div>
+              <div class="battle-slots" id="huntSlots"></div>
+              <button class="btn ghost" id="btnClearHunt">Clear Hunt Party</button>
+            </div>
+          </div>
         </div>
 
         <div class="bottom-drawer collapsed" data-drawer="bottom">
@@ -187,6 +199,7 @@
               </div>
               <div class="cms-console-actions">
                 <button class="btn primary" id="btnConsoleAddToBattle">Add to Battle Deck</button>
+                <button class="btn primary" id="btnConsoleAddToHunt">Add to Hunt Party</button>
                 <button class="btn ghost" id="btnConsoleUpgradeCard">Upgrade</button>
               </div>
               <div class="status" id="statusLine">System ready.</div>
@@ -197,6 +210,7 @@
                 <button class="btn ghost" data-view-target="holo">Holo</button>
                 <button class="btn ghost" data-view-target="decklist">Decklist</button>
                 <button class="btn ghost" data-view-target="battle">Battle</button>
+                <button class="btn ghost" data-view-target="hunt">Hunt</button>
                 <button class="btn primary" data-generate-deck>Generate Suit Deck</button>
               </div>
             </section>

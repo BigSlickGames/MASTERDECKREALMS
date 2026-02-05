@@ -1,0 +1,232 @@
+/* ==========================================================
+   BEGINNER SETTINGS (PIXELS)
+   Change these variables to resize and move pieces quickly.
+   ========================================================== */
+:root{
+  --frame-bg: #e57f8e;
+  --frame-border: #643d63;
+  --frame-radius: 28px;
+  --frame-padding: 22px;
+
+  --hud-width: 320px;
+  --hud-height: 64px;
+  --hud-top: 24px;
+  --hud-left: 28px;
+
+  --card-width: 260px;
+  --card-height: 340px;
+  --card-left: 70px;
+  --card-bottom: 80px;
+
+  --right-rail-width: 360px;
+  --right-rail-right: 30px;
+  --right-rail-bottom: 50px;
+  --right-rail-gap: 16px;
+
+  --roster-card-width: 160px;
+  --roster-card-height: 210px;
+  --roster-overlap: 0.7; /* 0.7 = 70% overlap */
+
+  --actions-width: 320px;
+  --actions-padding: 12px;
+  --actions-gap: 10px;
+  --actions-btn-height: 40px;
+
+  --text: #fff7f7;
+  --muted: rgba(255,255,255,.7);
+  --accent: #ff9b2f;
+  --danger: #ff3d5a;
+  --good: #4af2c1;
+  --font-display: "Impact","Haettenschweiler","Bahnschrift","Segoe UI",sans-serif;
+  --font-body: "Bahnschrift","Segoe UI","Verdana",sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+body{
+  margin:0;
+  font-family: var(--font-body);
+  background:#2a1c23;
+}
+
+/* MAIN FRAME */
+#app{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  padding:var(--frame-padding);
+  background: var(--frame-bg);
+  border:3px solid var(--frame-border);
+  border-radius: var(--frame-radius);
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,.08);
+  overflow:hidden;
+}
+
+/* TOP LEFT HUD BAR (uses #playerHud) */
+.hud-top{
+  position:absolute;
+  left:var(--hud-left);
+  top:var(--hud-top);
+  width:var(--hud-width);
+  height:var(--hud-height);
+  padding:10px 14px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #451018, #1c0a10 75%);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+}
+
+/* HUD bars inside the top bar */
+.hud-top .bar__label{ display:none; }
+.hud-top .bar{ margin-bottom:6px; }
+.hud-top .bar:last-child{ margin-bottom:0; }
+.hud-top .bar__track{
+  height:6px;
+  border-radius:999px;
+  background: rgba(255,255,255,.15);
+  overflow:hidden;
+  border:none;
+}
+.hud-top .bar__fill{ height:100%; }
+
+/* LEFT MAIN CARD */
+.card-slot{
+  position:absolute;
+  left:var(--card-left);
+  bottom:var(--card-bottom);
+  width:var(--card-width);
+  height:var(--card-height);
+}
+
+/* Card styling */
+.card3d{
+  width:100%;
+  height:100%;
+  border-radius: 22px;
+  position:relative;
+  background:#fff;
+  border:4px solid #6a0f12;
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  transform: rotate(-3deg);
+}
+.card3d__frame{ display:none; }
+.card3d__content{
+  position:absolute; inset:0;
+  padding:16px;
+  display:flex; flex-direction:column; justify-content:space-between;
+  color:#6a0f12;
+}
+.card3d__rank{
+  font-size:42px;
+  font-family: var(--font-display);
+}
+.card3d__name{
+  font-size:16px;
+  font-weight:700;
+}
+.card3d__meta{
+  font-size:12px;
+  color:#7e3a3d;
+}
+
+/* RIGHT SIDE COLUMN: roster + actions */
+.right-rail{
+  position:absolute;
+  right:var(--right-rail-right);
+  bottom:var(--right-rail-bottom);
+  width:var(--right-rail-width);
+  display:flex;
+  flex-direction:column;
+  gap:var(--right-rail-gap);
+}
+
+/* ROSTER STACK */
+.roster{
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-end;
+  gap:0;
+  overflow:visible;
+}
+.rosterCard{
+  width:var(--roster-card-width);
+  height:var(--roster-card-height);
+  background:#fff;
+  border:4px solid #6a0f12;
+  border-radius: 18px;
+  position:relative;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:10px;
+  color:#6a0f12;
+}
+.rosterCard + .rosterCard{
+  margin-left: calc(var(--roster-card-width) * -1 * var(--roster-overlap));
+}
+.rosterCard.active{ transform: translateY(-8px); z-index: 5; }
+
+/* Hide text inside stack if you want blank cards:
+   set opacity to 0 on these classes. */
+.rosterCard__top,
+.rosterCard__hp{ font-size:11px; }
+
+/* ACTION PANEL (bottom right) */
+.actions-panel{
+  width:var(--actions-width);
+  padding:var(--actions-padding);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #a83746, #3a0d14);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  position:relative;
+}
+.actions-panel::before{
+  content:"";
+  position:absolute;
+  left:14px;
+  right:14px;
+  top:10px;
+  height:6px;
+  background:
+    linear-gradient(90deg, #2dd36f, #2dd36f) 0 0/28% 100% no-repeat,
+    linear-gradient(90deg, #2f89ff, #2f89ff) 0 0/60% 100% no-repeat,
+    linear-gradient(90deg, #ff9b2f, #ff9b2f) 0 0/90% 100% no-repeat;
+  opacity:.9;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:var(--actions-gap);
+  padding-top:18px;
+}
+
+.btn{
+  height:var(--actions-btn-height);
+  border:none;
+  border-radius:10px;
+  background: #3b0b12;
+  color:#fff;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform: uppercase;
+  cursor:pointer;
+}
+.btn--accent{ background:#5a1a1f; }
+.btn--danger{ background:#5a1a1f; }
+
+/* Hidden UI required by JS */
+.hidden-ui{
+  display:none;
+}
+
+/* Small screens: scale down */
+@media (max-width: 900px){
+  :root{
+    --card-width: 220px;
+    --card-height: 290px;
+    --right-rail-width: 300px;
+    --roster-card-width: 130px;
+    --roster-card-height: 180px;
+  }
+}

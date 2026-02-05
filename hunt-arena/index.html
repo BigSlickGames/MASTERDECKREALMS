@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Hunt Arena</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="arena-body">
+  <div class="arena-shell">
+    <!-- TOP BAR: change spacing via --topbar-padding in hunt-arena/styles.css -->
+    <header class="arena-top">
+      <div class="arena-title">HUNT ARENA</div>
+      <div class="arena-sub">Standalone Module</div>
+    </header>
+
+    <!-- GAME FRAME: size via --frame-padding / --frame-radius -->
+    <main class="arena-frame">
+      <div class="arena-layout">
+        <section class="arena-game">
+          <iframe
+            id="huntGameFrame"
+            title="Council Hunt Arena"
+            src="../deck-realms-council-hunt/deck-realms-council-hunt/index.html"
+            loading="eager"
+          ></iframe>
+        </section>
+      </div>
+    </main>
+
+    <!-- Rotate prompt (portrait only). Styling in hunt-arena/styles.css -->
+    <div class="rotate-overlay" role="status" aria-live="polite">
+      <div class="rotate-ring"></div>
+      <div class="rotate-text">Rotate your device to landscape.</div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

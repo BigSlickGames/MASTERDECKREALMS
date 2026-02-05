@@ -913,7 +913,6 @@ body.menu-only .topbar .top-menu-panel{
   letter-spacing:.8px;
   color: color-mix(in srgb, var(--brand) 70%, #fff);
 }
-
 /* COLLECTION */
 .collection-panel{min-height:0; overflow:auto}
 .panel-head{display:flex; justify-content:space-between; align-items:center; gap:10px}
@@ -1555,6 +1554,10 @@ body[data-power="off"] .power-dock{
   .cms-console-buttons{grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))}
   .cms-console-head{justify-content:center}
   .bottom-drawer{margin-top:12px}
+  .bottom-drawer .drawer-body{
+    max-height:none;
+    overflow:visible;
+  }
   .mobile-section-tabs{
     display:flex;
     gap:6px;

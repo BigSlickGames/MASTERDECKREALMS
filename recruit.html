@@ -3,127 +3,145 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Card Forge - Recruit</title>
+  <title>Card Forge - Hunt</title>
   <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./hunt.css" />
 </head>
-<body class="portrait-mode">
-  <div class="portrait-stage">
-    <div class="screen-frame" aria-hidden="true"></div>
-    <div class="screen-effects" aria-hidden="true">
-      <span class="zoop main"></span>
-      <span class="zoop alt"></span>
-    </div>
-    <div class="screen-off" aria-hidden="true">POWER OFF</div>
-    <label class="power-toggle power-dock" for="powerToggleDock">
-      <input type="checkbox" id="powerToggleDock" checked />
-      <span class="power-slider" aria-hidden="true"></span>
-      <span class="power-label">Power</span>
-    </label>
-    <div class="app">
+<body class="hunt-full">
+  <div class="app">
     <header class="topbar glass">
-    <div class="brand">
-      <div class="brand-mark">CF</div>
-      <div>
-        <div class="brand-title">Recruit</div>
-<div class="hud-typing">SYSTEM LINK: ACTIVE</div>
-      </div>
-    </div>
-
-    <section class="panel upgrades-panel glass top-menu-panel">
-      <div class="hud-corners"></div>
-      <div class="neon-rail"></div>
-      <div class="steel-grill"></div>
-      <div class="panel-title">
-        <span class="panel-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M3 5h8v6H3V5zm10 0h8v6h-8V5zM3 13h8v6H3v-6zm10 0h8v6h-8v-6z"/></svg>
-        </span>
-        <span class="panel-label">Screens</span>
-      </div>
-      <div class="screen-links">
-        <a class="screen-link" href="./index.html">CMS</a>
-        <a class="screen-link active" href="./recruit.html">Recruit</a>
-        <a class="screen-link" href="./store.html">Card Store</a>
-        <a class="screen-link" href="./battle.html">Battle</a>
-        <a class="screen-link" href="./explore.html">Explore</a>
-      </div>
-    </section>
-
-    <div class="top-suit">
-      <button id="suitButton" class="suit-dial" aria-label="Suit selection button">
-        <span class="dial-shell"></span>
-        <span class="dial-ring"></span>
-        <span class="dial-glass"></span>
-        <span class="dial-sheen"></span>
-        <span class="dial-sparks"></span>
-        <span class="dial-icon" id="suitIcon">&#x2663;</span>
-      </button>
-    </div>
-
-    <div class="top-actions">
-<div class="chips">
-        <div class="chips-label">Chips</div>
-        <div class="chips-value" id="chipsValue">1200</div>
-        <button class="btn tiny" id="btnAddChips">Add</button>
-      </div>
-      <div class="profile">
-        <div class="avatar">P1</div>
+      <div class="brand">
+        <div class="brand-mark">CF</div>
         <div>
-          <div class="profile-name">Player One</div>
-          <div class="profile-level">Collector Lv 6</div>
+          <div class="brand-title">HUNT</div>
+          <div class="hud-typing">SYSTEM LINK: ACTIVE</div>
         </div>
       </div>
-    </div>
-</header>
 
-
-    <main class="main single">
-      <section class="panel placeholder glass">
+      <section class="panel upgrades-panel glass top-menu-panel">
         <div class="hud-corners"></div>
         <div class="neon-rail"></div>
         <div class="steel-grill"></div>
         <div class="panel-title">
           <span class="panel-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm7 3h-3v-3h-2v3h-3v2h3v3h2v-3h3zM5 20v-2c0-2 3-4 7-4 1 0 2 .1 3 .3v2.1A6 6 0 0 0 12 16c-4 0-7 2-7 4z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M3 5h8v6H3V5zm10 0h8v6h-8V5zM3 13h8v6H3v-6zm10 0h8v6h-8v-6z"/></svg>
           </span>
-          <span class="panel-label">Recruit</span>
+          <span class="panel-label">Screens</span>
         </div>
-        <p>Recruit channel coming soon.</p>
+        <div class="screen-links">
+          <a class="screen-link" href="./index.html">CMS</a>
+          <a class="screen-link active" href="./recruit.html">HUNT</a>
+          <a class="screen-link" href="./store.html">Card Store</a>
+          <a class="screen-link" href="./battle.html">Battle</a>
+          <a class="screen-link" href="./explore.html">Explore</a>
+        </div>
       </section>
-      <section class="panel holo-panel glass">
+
+      <div class="top-suit">
+        <button id="suitButton" class="suit-dial" aria-label="Suit selection button">
+          <span class="dial-shell"></span>
+          <span class="dial-ring"></span>
+          <span class="dial-glass"></span>
+          <span class="dial-sheen"></span>
+          <span class="dial-sparks"></span>
+          <span class="dial-icon" id="suitIcon">&#x2663;</span>
+        </button>
+      </div>
+
+      <div class="top-actions">
+        <div class="chips">
+          <div class="chips-label">Chips</div>
+          <div class="chips-value" id="chipsValue">1200</div>
+          <button class="btn tiny" id="btnAddChips">Add</button>
+        </div>
+        <div class="profile">
+          <div class="avatar">P1</div>
+          <div>
+            <div class="profile-name">Player One</div>
+            <div class="profile-level">Collector Lv 6</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main single hunt-screen">
+      <section class="panel hunt-game-panel glass">
         <div class="hud-corners"></div>
         <div class="neon-rail"></div>
         <div class="steel-grill"></div>
         <div class="panel-title">
           <span class="panel-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 3l7 4v10l-7 4-7-4V7l7-4zm0 2.2L7 7.8v8.4l5 2.8 5-2.8V7.8l-5-2.6z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M7 3h10v2H7V3zm-2 4h14v12H5V7zm2 2v8h10V9H7z"/></svg>
           </span>
-          <span class="panel-label">Hologram Pod</span>
+          <span class="panel-label">Council Hunt Arena</span>
         </div>
-        <div class="holo-display">
-          <div class="holo-card large">
-            <div class="holo-title">RECRUIT SIGNAL</div>
-            <div class="holo-grid"></div>
-            <div class="holo-lines">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="holo-meta">CHANNEL PENDING</div>
-          </div>
-          <div class="holo-base"></div>
+        <iframe id="huntGameIframe" class="hunt-game-iframe" title="Council Hunt" src="./deck-realms-council-hunt/deck-realms-council-hunt/index.html" loading="eager"></iframe>
+      </section>
+      <section class="panel rotate-panel glass hunt-rotate-panel">
+        <div class="hud-corners"></div>
+        <div class="neon-rail"></div>
+        <div class="steel-grill"></div>
+        <div class="panel-title">
+          <span class="panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v6h-2V4H7v16h8v2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm10.5 9.5V8l4 4-4 4v-3.5h-3v-2h3z"/></svg>
+          </span>
+          <span class="panel-label">Rotate Device</span>
+        </div>
+        <div class="rotate-callout">
+          <div class="rotate-arrow" aria-hidden="true"></div>
+          <div class="rotate-text">Rotate your device for the full HUNT experience.</div>
         </div>
       </section>
     </main>
 
     <nav class="mobile-nav" aria-label="Primary">
       <a href="./index.html">CMS</a>
-      <a class="active" href="./recruit.html">Recruit</a>
+      <a class="active" href="./recruit.html">HUNT</a>
       <a href="./store.html">Store</a>
       <a href="./battle.html">Battle</a>
       <a href="./explore.html">Explore</a>
     </nav>
-
-    </div>
   </div>
 
   <script src="./app.js"></script>
+  <script>
+    (() => {
+      const panel = document.querySelector(".hunt-game-panel");
+      const iframe = document.getElementById("huntGameIframe");
+      if (!panel || !iframe) return;
+
+      function fitLandscapeGame() {
+        const panelStyle = getComputedStyle(panel);
+        const paddingLeft = parseFloat(panelStyle.paddingLeft);
+        const paddingRight = parseFloat(panelStyle.paddingRight);
+        const paddingTop = parseFloat(panelStyle.paddingTop);
+        const paddingBottom = parseFloat(panelStyle.paddingBottom);
+        const title = panel.querySelector(".panel-title");
+        const titleStyle = title ? getComputedStyle(title) : null;
+        const titleHeight = title ? title.offsetHeight : 0;
+        const titleMargin = titleStyle ? parseFloat(titleStyle.marginBottom) : 0;
+        const availableWidth = panel.clientWidth - paddingLeft - paddingRight;
+        const availableHeight = panel.clientHeight - paddingTop - paddingBottom - titleHeight - titleMargin;
+        if (availableWidth <= 0 || availableHeight <= 0) return;
+
+        const doc = iframe.contentDocument;
+        const app = doc?.getElementById("app") || doc?.body;
+        const nativeWidth = Math.max(app?.scrollWidth || 0, 1);
+        const nativeHeight = Math.max(app?.scrollHeight || 0, 1);
+        const scale = Math.min(availableWidth / nativeHeight, availableHeight / nativeWidth, 1);
+
+        iframe.style.width = `${nativeWidth}px`;
+        iframe.style.height = `${nativeHeight}px`;
+        iframe.style.left = `${paddingLeft + availableWidth / 2}px`;
+        iframe.style.top = `${paddingTop + titleHeight + titleMargin + availableHeight / 2}px`;
+        iframe.style.transform = `translate(-50%, -50%) rotate(90deg) scale(${scale})`;
+      }
+
+      window.addEventListener("resize", fitLandscapeGame);
+      window.addEventListener("orientationchange", fitLandscapeGame);
+      iframe.addEventListener("load", fitLandscapeGame);
+      fitLandscapeGame();
+    })();
+  </script>
 </body>
 </html>

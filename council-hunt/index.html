@@ -1,0 +1,90 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deck Realms — Council Hunt (Prototype)</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- TOP BAR: Title + buttons. Resize via --topbar-padding in styles.css -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__title">DECK REALMS</div>
+        <div class="brand__mode">Council Hunt — Duel Recruit</div>
+      </div>
+
+      <div class="topbar__right">
+        <button id="btnNewEncounter" class="btn btn--ghost">New Encounter</button>
+        <button id="btnReset" class="btn btn--ghost">Reset</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- ARENA: 3 columns (left / center / right). Change widths via --arena-columns -->
+      <section class="arena">
+        <!-- LEFT COLUMN: Player info + HUD -->
+        <div class="fighter fighter--player">
+          <div class="player-info">
+            <div class="player-info__rank" id="playerRank">?</div>
+            <div class="player-info__name" id="playerName">???</div>
+            <div class="player-info__meta" id="playerMeta">???</div>
+          </div>
+
+          <div class="hud" id="playerHud"></div>
+        </div>
+
+        <!-- CENTER COLUMN: Turn/status + log -->
+        <div class="center">
+          <div class="center__panel">
+            <div class="turn" id="turnLabel">Turn: —</div>
+            <div class="status" id="statusLabel">Select an action.</div>
+          </div>
+
+          <div class="log" id="combatLog"></div>
+        </div>
+
+        <!-- RIGHT COLUMN: Roster stack + (enemy card hidden by CSS)
+             Move the roster block to another column if you want it elsewhere. -->
+        <div class="fighter fighter--enemy">
+          <div class="roster roster--inline" id="roster"></div>
+          <div class="fighter__card">
+            <div class="card3d card3d--enemy" id="enemyCard">
+              <div class="card3d__frame"></div>
+              <div class="card3d__content">
+                <div class="card3d__rank" id="enemyRank">?</div>
+                <div class="card3d__name" id="enemyName">—</div>
+                <div class="card3d__meta" id="enemyMeta">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud" id="enemyHud"></div>
+        </div>
+      </section>
+
+      <!-- ACTIONS ROW: Buttons; size via --actions-padding / --actions-gap -->
+      <section class="bottom">
+
+        <div class="actions">
+          <button id="btnAttack" class="btn">Attack</button>
+          <button id="btnGuard" class="btn">Guard</button>
+          <button id="btnSwap" class="btn">Swap</button>
+          <button id="btnRecruit" class="btn btn--accent">Recruit</button>
+          <button id="btnRun" class="btn btn--danger">Run</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="hint">
+        Tip: break <b>Shield</b>, drop enemy <b>HP</b> under threshold, then <b>Recruit</b>. Failed recruit increases resistance.
+      </div>
+    </footer>
+  </div>
+  <div class="gate" id="huntGate" hidden></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

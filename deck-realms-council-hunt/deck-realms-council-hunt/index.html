@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deck Realms ? Council Hunt (Prototype)</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- TOP LEFT BAR (player HUD). Size/position in styles.css variables. -->
+    <div class="hud hud-top" id="playerHud"></div>
+
+    <!-- LEFT MAIN CARD (player card). Size/position in styles.css variables. -->
+    <div class="card-slot">
+      <div class="card3d card3d--player" id="playerCard">
+        <div class="card3d__frame"></div>
+        <div class="card3d__content">
+          <div class="card3d__rank" id="playerRank">?</div>
+          <div class="card3d__name" id="playerName">?</div>
+          <div class="card3d__meta" id="playerMeta">?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: stack of 5 player cards. Size/overlap in styles.css variables. -->
+    <div class="right-rail">
+      <div class="roster roster--stack" id="roster"></div>
+
+      <!-- ACTION PANEL (bottom right). Button grid sizes in styles.css variables. -->
+      <div class="actions-panel">
+        <div class="actions">
+          <button id="btnAttack" class="btn">Action</button>
+          <button id="btnGuard" class="btn">Action</button>
+          <button id="btnSwap" class="btn">Action</button>
+          <button id="btnRecruit" class="btn btn--accent">Action</button>
+          <button id="btnRun" class="btn btn--danger">Action</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIDDEN UI (required by JS). Keep these IDs intact. -->
+    <div class="hidden-ui">
+      <div class="hud" id="enemyHud"></div>
+      <div class="center">
+        <div class="center__panel">
+          <div class="turn" id="turnLabel">Turn: ?</div>
+          <div class="status" id="statusLabel">Select an action.</div>
+        </div>
+        <div class="log" id="combatLog"></div>
+      </div>
+      <div class="fighter__card">
+        <div class="card3d card3d--enemy" id="enemyCard">
+          <div class="card3d__frame"></div>
+          <div class="card3d__content">
+            <div class="card3d__rank" id="enemyRank">?</div>
+            <div class="card3d__name" id="enemyName">?</div>
+            <div class="card3d__meta" id="enemyMeta">?</div>
+          </div>
+        </div>
+      </div>
+      <button id="btnNewEncounter"></button>
+      <button id="btnReset"></button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

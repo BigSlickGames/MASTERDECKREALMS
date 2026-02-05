@@ -38,6 +38,10 @@ const suits = [
   { name: "Diamonds", key: "D", enabled: true },
   { name: "Clubs", key: "C", enabled: true }
 ];
+const HUNT_STORAGE_KEY = "huntParties";
+const COLLECTION_STORAGE_KEY = "collection";
+const BATTLE_STORAGE_KEY = "battleDecks";
+const CHIPS_STORAGE_KEY = "chips";
 
 let chips = 1200;
 let activeSuit = "Hearts";
@@ -49,13 +53,111 @@ const battleDecks = {
   Diamonds: [],
   Clubs: []
 };
-const huntParties = {
-  Hearts: [],
-  Spades: [],
-  Diamonds: [],
-  Clubs: []
-};
+function getDefaultHuntParties(){
+  return {
+    Hearts: [],
+    Spades: [],
+    Diamonds: [],
+    Clubs: []
+  };
+}
+const huntParties = getDefaultHuntParties();
 let cycleIndex = 0;
+
+function loadHuntPartiesFromStorage(){
+  try {
+    const raw = window.localStorage.getItem(HUNT_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return;
+    Object.keys(huntParties).forEach(suit => {
+      const party = parsed[suit];
+      if (Array.isArray(party)) {
+        huntParties[suit] = party.filter(id => typeof id === "string");
+      }
+    });
+  } catch {}
+}
+
+function persistHuntParties(){
+  try {
+    window.localStorage.setItem(HUNT_STORAGE_KEY, JSON.stringify(huntParties));
+  } catch {}
+}
+
+function announceHuntPartyChange(){
+  try {
+    window.dispatchEvent(new CustomEvent("hunt-party-changed", {
+      detail: {
+        suit: activeSuit,
+        party: huntParties[activeSuit]?.slice() ?? []
+      }
+    }));
+  } catch {}
+}
+
+function loadCollectionFromStorage(){
+  try {
+    const raw = window.localStorage.getItem(COLLECTION_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return;
+    Object.entries(parsed).forEach(([id, meta]) => {
+      if (!meta || typeof meta !== "object") return;
+      const count = Number(meta.count);
+      const level = Number(meta.level);
+      if (!Number.isFinite(count) || count < 0) return;
+      collection[id] = {
+        count,
+        level: Number.isFinite(level) && level > 0 ? level : 1
+      };
+    });
+  } catch {}
+}
+
+function persistCollection(){
+  try {
+    window.localStorage.setItem(COLLECTION_STORAGE_KEY, JSON.stringify(collection));
+  } catch {}
+}
+
+function loadBattleDecksFromStorage(){
+  try {
+    const raw = window.localStorage.getItem(BATTLE_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object") return;
+    Object.keys(battleDecks).forEach(suit => {
+      const deck = parsed[suit];
+      if (Array.isArray(deck)) {
+        battleDecks[suit] = deck.filter(id => typeof id === "string");
+      }
+    });
+  } catch {}
+}
+
+function persistBattleDecks(){
+  try {
+    window.localStorage.setItem(BATTLE_STORAGE_KEY, JSON.stringify(battleDecks));
+  } catch {}
+}
+
+function loadChipsFromStorage(){
+  try {
+    const raw = window.localStorage.getItem(CHIPS_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = Number(raw);
+    if (Number.isFinite(parsed) && parsed >= 0) {
+      chips = parsed;
+    }
+  } catch {}
+}
+
+function persistChips(){
+  try {
+    window.localStorage.setItem(CHIPS_STORAGE_KEY, String(chips));
+  } catch {}
+}
 
 function basePower(rank){
   const order = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
@@ -91,6 +193,7 @@ function setStatus(message){
 
 function updateChips(){
   if (chipsValue) chipsValue.textContent = chips.toString();
+  persistChips();
 }
 
 function ensureCard(id){
@@ -102,11 +205,13 @@ function ensureCard(id){
 function addCard(id){
   ensureCard(id);
   collection[id].count += 1;
+  persistCollection();
 }
 
 function addCardCopies(id, count){
   ensureCard(id);
   collection[id].count += count;
+  persistCollection();
 }
 
 function upgradeCard(id){
@@ -117,6 +222,7 @@ function upgradeCard(id){
   }
   collection[id].count -= 1;
   collection[id].level += 1;
+  persistCollection();
   setStatus("Card upgraded.");
   renderAll();
 }
@@ -273,6 +379,7 @@ function addToBattle(id){
     return;
   }
   deck.push(id);
+  persistBattleDecks();
   setStatus("Card added to battle deck.");
   renderBattleDeck();
 }
@@ -281,11 +388,13 @@ function removeFromBattle(id){
   const deck = battleDecks[activeSuit];
   const index = deck.indexOf(id);
   if (index >= 0) deck.splice(index, 1);
+  persistBattleDecks();
   renderBattleDeck();
 }
 
 function clearBattleDeck(){
   battleDecks[activeSuit].length = 0;
+  persistBattleDecks();
   renderBattleDeck();
   setStatus("Battle deck cleared.");
 }
@@ -307,6 +416,8 @@ function addToHunt(id){
   party.push(id);
   setStatus("Card added to hunt party.");
   renderHuntParty();
+  persistHuntParties();
+  announceHuntPartyChange();
 }
 
 function removeFromHunt(id){
@@ -314,12 +425,16 @@ function removeFromHunt(id){
   const index = party.indexOf(id);
   if (index >= 0) party.splice(index, 1);
   renderHuntParty();
+  persistHuntParties();
+  announceHuntPartyChange();
 }
 
 function clearHuntParty(){
   huntParties[activeSuit].length = 0;
   renderHuntParty();
   setStatus("Hunt party cleared.");
+  persistHuntParties();
+  announceHuntPartyChange();
 }
 
 function updateProfileStats(){
@@ -442,6 +557,7 @@ function setActiveSuit(suitName){
   } catch {}
   syncSuitButton();
   renderAll();
+  announceHuntPartyChange();
 }
 
 
@@ -507,8 +623,13 @@ function initCmsViews(){
     btn.addEventListener("click", () => setView(btn.dataset.viewTarget));
   });
 
-  const initial = viewButtons.find(btn => btn.classList.contains("active"))?.dataset.viewTarget
+  let initial = viewButtons.find(btn => btn.classList.contains("active"))?.dataset.viewTarget
     || viewButtons[0].dataset.viewTarget;
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get("view");
+  if (requested && views.some(view => view.dataset.view === requested)) {
+    initial = requested;
+  }
   setView(initial);
 }
 
@@ -550,20 +671,26 @@ function updateConsoleActions(){
   const addBtn = document.getElementById("btnConsoleAddToBattle");
   const huntBtn = document.getElementById("btnConsoleAddToHunt");
   const upgradeBtn = document.getElementById("btnConsoleUpgradeCard");
-  if (!addBtn || !upgradeBtn || !huntBtn) return;
+  if (!addBtn && !huntBtn && !upgradeBtn) return;
   if (!selectedCardId) {
-    addBtn.disabled = true;
-    huntBtn.disabled = true;
-    upgradeBtn.disabled = true;
+    if (addBtn) addBtn.disabled = true;
+    if (huntBtn) huntBtn.disabled = true;
+    if (upgradeBtn) upgradeBtn.disabled = true;
     return;
   }
   const meta = collection[selectedCardId];
   const owned = meta && meta.count > 0;
   const battleFull = battleDecks[activeSuit]?.length >= 5;
   const huntFull = huntParties[activeSuit]?.length >= 5;
-  addBtn.disabled = !owned || battleFull || battleDecks[activeSuit]?.includes(selectedCardId);
-  huntBtn.disabled = !owned || huntFull || huntParties[activeSuit]?.includes(selectedCardId);
-  upgradeBtn.disabled = !owned;
+  if (addBtn) {
+    addBtn.disabled = !owned || battleFull || battleDecks[activeSuit]?.includes(selectedCardId);
+  }
+  if (huntBtn) {
+    huntBtn.disabled = !owned || huntFull || huntParties[activeSuit]?.includes(selectedCardId);
+  }
+  if (upgradeBtn) {
+    upgradeBtn.disabled = !owned;
+  }
 }
 
 function syncSuitButton(){
@@ -627,13 +754,17 @@ document.getElementById("btnConsoleUpgradeCard")?.addEventListener("click", () =
   upgradeCard(selectedCardId);
 });
 
-updateChips();
+loadChipsFromStorage();
 try {
   const storedSuit = window.localStorage.getItem("activeSuit");
   if (storedSuit && suits.find(s => s.name === storedSuit)) {
     activeSuit = storedSuit;
   }
 } catch {}
+loadCollectionFromStorage();
+loadBattleDecksFromStorage();
+loadHuntPartiesFromStorage();
+updateChips();
 if (document.body) document.body.dataset.suit = activeSuit.toLowerCase();
 syncSuitButton();
 renderAll();
@@ -641,6 +772,7 @@ initMenuDrawers();
 initCmsViews();
 initMobileSections();
 updateConsoleActions();
+announceHuntPartyChange();
 
 
 function setPowerState(isOn){
